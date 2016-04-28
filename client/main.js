@@ -15,13 +15,7 @@
 // });
 
 
-Template.TestTaker.helpers({
-  
-  Tests: function() {
-    return Tests.find();
-  }
-  
-});
+
 
 
 Template.registerHelper("log", function(something) {
@@ -43,8 +37,20 @@ Router.route('/',  {
   action: function () {
     this.render('TestTaker');
   }
-
 });
+Template.TestTaker.helpers({
+  
+  Tests: function() {
+    return Tests.find();
+  },
+
+  Questions: function() {
+    return Tests.find(TestSessions.findOne().currentQuestion);
+  }
+  
+});
+
+
 
 Router.route('/tester', {
 //   waitOn: function () {
@@ -64,4 +70,10 @@ Router.route('/viewer', {
   }
 });
 
+Template.ViewerScreen.helpers({
+  Question: function() {
+    return Tests.findOne(TestSessions.findOne().currentQuestion);
+  }
+  
+});
 

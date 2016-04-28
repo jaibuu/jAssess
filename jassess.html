@@ -25,7 +25,8 @@
 
 
 <template name="ViewerScreen">
-	<h1>Viewer</h1>
+	<h1>  {{ Question.question }} </h1>
+
 </template>
 
 
@@ -34,7 +35,7 @@
 
   <!-- LOOP OVER tests AND SHOW EACH -->
   <div class="tests">
-      {{ #each Tests }}
+      {{ #each Questions }}
           {{ >test }}
       {{ /each }}
   </div>

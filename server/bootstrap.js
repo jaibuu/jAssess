@@ -31,4 +31,23 @@ Meteor.startup(function() {
 
   }
 
+
+
+  if (TestSessions.find().count() === 0) {
+
+    // create sample TestSessions
+    var sampleTestSessions = [
+      {
+        currentQuestion: Tests.findOne()._id,
+        active:true
+      }
+    ];
+
+    // loop over each sample testSession and insert into database
+    _.each(sampleTestSessions, function(testSession) {
+      TestSessions.insert(testSession);
+    });
+
+  }
+
 });
