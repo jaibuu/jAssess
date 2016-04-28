@@ -35,26 +35,33 @@ UI.registerHelper('indexedArray', function(context, options) {
 
 Router.route('/',  {
   action: function () {
+    TestApp.login()
     this.render('TestTaker');
   }
 });
 
-Template.TestTaker.helpers({
-  
-  Tests: function() {
-    return Tests.find();
-  },
+  Template.TestTaker.helpers({
+    
+    Tests: function() {
+      return Tests.find();
+    },
 
-  Questions: function() {
-    if(TestSessions.findOne()){
-        console.log('TestSessions found');
-        return Tests.find(TestSessions.findOne().currentQuestion);
-    } else {
-        console.warn('No TestSessions found');
+    Questions: function() {
+      if(TestSessions.findOne()){
+          console.log('TestSessions found');
+          return Tests.find(TestSessions.findOne().currentQuestion);
+      } else {
+          console.warn('No TestSessions found');
+      }
     }
-  }
-  
+    
+  });
+Router.route('/welcome',  {
+  action: function () {
+    this.render('Welcome');
+  }
 });
+
 
 Router.route('/tester', {
   //waitOn: function () {
@@ -62,9 +69,33 @@ Router.route('/tester', {
   //},
 
   action: function () {
+
+
+    Meteor.call('getSessions', function(err, data) {
+      if (err)
+        console.log(err);
+      Session.set('gotSessions', data);
+    });
+
+
+
+    // Meteor.call('getList', function(err, data) {
+    //   if (err)
+    //     console.log(err);
+
+    //   console.log('Call List Data', data);
+    //   Session.set('gotSessions', data);
+    // });
+
     this.render('TesterDashboard');
   }
 });
+  Template.TesterDashboard.helpers({ 
+    Sessions : function(){
+      return Session.get('gotSessions');
+    }
+});
+
 
 Router.route('/viewer', {
   action: function () {

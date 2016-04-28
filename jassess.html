@@ -16,6 +16,31 @@
         {{ >testForm }}
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+          <div class="sessions">
+              {{ log 'Sessions' }}
+              {{ log Sessions }}
+
+                {{#each Sessions}}
+                  <p>{{{this}}}</p>
+                {{/each}}
+
+          </div>
+
+      </div>
+    </div>
+  </div>  
+</template>
+
+<template name="Welcome">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        {{ >welcomeForm }}
+      </div>
+    </div>
   </div>  
 </template>
 
