@@ -45,7 +45,12 @@ Template.TestTaker.helpers({
   },
 
   Questions: function() {
-    return Tests.find(TestSessions.findOne().currentQuestion);
+    if(TestSessions.findOne()){
+        console.log('TestSessions found');
+        return Tests.find(TestSessions.findOne().currentQuestion);
+    } else {
+        console.warn('No TestSessions found');
+    }
   }
   
 });

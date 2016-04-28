@@ -50,4 +50,27 @@ Meteor.startup(function() {
 
   }
 
+
+
+  Meteor.methods({
+      join: function(name) {
+ 
+        console.log('Hello', name, this.connection.id);
+        return Participants.insert({ name: name, online: true, connection_id: this.connection.id });
+
+
+      },
+      online: function(isOnline) {
+        if (isOnline == null) {
+          isOnline = true;
+        }
+        return Meteor.users.update(Meteor.userId(), {
+          $set: {
+            online: isOnline
+          }
+        });
+      }
+    });
+
+
 });
