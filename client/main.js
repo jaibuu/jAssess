@@ -38,6 +38,7 @@ Router.route('/',  {
     this.render('TestTaker');
   }
 });
+
 Template.TestTaker.helpers({
   
   Tests: function() {
@@ -55,19 +56,15 @@ Template.TestTaker.helpers({
   
 });
 
-
-
 Router.route('/tester', {
-//   waitOn: function () {
-//     return IRLibLoader.load('//media.twiliocdn.com/sdk/rtc/js/ip-messaging/v0.8/twilio-ip-messaging.min.js');
-//   },
+  //waitOn: function () {
+  //  return IRLibLoader.load('//media.twiliocdn.com/sdk/rtc/js/ip-messaging/v0.8/twilio-ip-messaging.min.js');
+  //},
 
   action: function () {
     this.render('TesterDashboard');
   }
 });
-
-
 
 Router.route('/viewer', {
   action: function () {
@@ -79,6 +76,5 @@ Template.ViewerScreen.helpers({
   Question: function() {
     return Tests.findOne(TestSessions.findOne().currentQuestion);
   }
-  
 });
 
