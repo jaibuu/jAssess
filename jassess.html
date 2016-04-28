@@ -3,13 +3,42 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
 
-  {{> hello}}
+
 </body>
 
-<template name="home">
-  <form class="new-message">
-    <input type="text" name="message" placeholder="What's on your mind?">
-  </form>
+
+<template name="TesterDashboard">
+  <!-- PULL IN THE POLL CREATION FORM -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        {{ >testForm }}
+      </div>
+    </div>
+  </div>  
 </template>
+
+<template name="Home">
+	<h1>home</h1>
+</template>
+
+
+<template name="ViewerScreen">
+	<h1>Viewer</h1>
+</template>
+
+
+
+<template name="TestTaker">
+
+  <!-- LOOP OVER tests AND SHOW EACH -->
+  <div class="tests">
+      {{ #each Tests }}
+          {{ >test }}
+      {{ /each }}
+  </div>
+
+</template>
+
+
