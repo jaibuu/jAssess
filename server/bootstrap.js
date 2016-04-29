@@ -65,8 +65,9 @@ Meteor.startup(function() {
           $set: {
               name: name,
               online: true,
-              connection_id: this.connection.id
-          }
+              // connection_id:  ['ok', this.connection.id, 'bla']
+          },
+          '$addToSet' : { "connection_id" : this.connection.id }
       });
 
 

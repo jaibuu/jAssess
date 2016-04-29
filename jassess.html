@@ -24,7 +24,17 @@
               {{ log Sessions }}
 
                 {{#each Sessions}}
-                  <p>{{{this.name}}} : {{{this.connection_id}}} </p>
+                    <p>{{{this.name}}}</p> 
+
+                    <ul> 
+                    {{#each this.connection_id}}
+                        <li>
+                            <p>{{{this}}}</p> 
+                        </li>
+                    {{/each}}
+                    </ul>
+                                    
+
                 {{/each}}
 
           </div>
