@@ -72,7 +72,7 @@ Meteor.startup(function() {
     },
     getSessions : function(){
       // console.log(Meteor.server.sessions);
-      return Object.keys(Meteor.server.sessions)
+      return Participants.find( {connection_id : { $in: Object.keys(Meteor.server.sessions)  }} ).fetch()
     },
     getList : function(){
       // console.log(Meteor.server.sessions);
