@@ -90,7 +90,7 @@ Meteor.startup(function() {
     getSessions : function(){
       // console.log(Meteor.server.sessions);
 
-
+      removeOldConnectionsFromParticipants();
       return Participants.find( {connection_id : { $in: Object.keys(Meteor.server.sessions)  }} ).fetch()
     },
     getList : function(){
@@ -103,36 +103,42 @@ Meteor.startup(function() {
 /* HELPERS */
 
   var _oldsessions = JSON.stringify([]);
-  var interval = setInterval( function(){
-    if(_oldsessions !=  JSON.stringify(Object.keys(Meteor.server.sessions))){
-      removeOldConnectionsFromParticipants();
-      _oldsessions = JSON.stringify(Object.keys(Meteor.server.sessions));
-    }
 
-  }, 1000);
+  // setTimeout(function(){
 
-});
+  //   var interval = setInterval( function(){
+  //     if(_oldsessions !=  JSON.stringify(Object.keys(Meteor.server.sessions))){
+  //       removeOldConnectionsFromParticipants();
+  //       _oldsessions = JSON.stringify(Object.keys(Meteor.server.sessions));
+  //     }
+
+  //   }, 1000);
 
 
+  // }, 2000);
 
-/* HELPERS */
 
-var removeOldConnectionsFromParticipants = function(){ 
+  var removeOldConnectionsFromParticipants = function(){ 
 
-  //cleanup of expired sessions
+    //cleanup of expired sessions
 
-    Participants.find().fetch().forEach( function(Participant) {
+      Participants.find().fetch().forEach( function(Participant) {
 
-      var old_ids = Participant.connection_id;
+        var old_ids = Participant.connection_id;
 
-      old_ids = old_ids.filter(function(n) {
-        return Object.keys(Meteor.server.sessions).indexOf(n) != -1;
+        old_ids = old_ids.filter(function(n) {
+          return Object.keys(Meteor.server.sessions).indexOf(n) != -1;
+        });
+
+        Participants.update({ _id : Participant._id }, { $set : { connection_id :  old_ids  } });
       });
 
-      Participants.update({ _id : Participant._id }, { $set : { connection_id :  old_ids  } });
-    });
+  };
 
-};
+
+
+
+});
 
 
 
