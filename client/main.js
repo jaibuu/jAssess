@@ -70,12 +70,17 @@ Router.route('/tester', {
 
   action: function () {
 
+    this._interval = setInterval( function(){
 
-    Meteor.call('getSessions', function(err, data) {
-      if (err)
-        console.log(err);
-      Session.set('gotSessions', data);
-    });
+      Meteor.call('getSessions', function(err, data) {
+        if (err)
+          console.log(err);
+        Session.set('gotSessions', data);
+      });
+
+
+    }.bind(this) , 1000 )
+
 
 
 
