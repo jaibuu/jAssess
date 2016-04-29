@@ -79,9 +79,7 @@ Router.route('/tester', {
       });
 
 
-    }.bind(this) , 1000 )
-
-
+    }.bind(this) , 1000);
 
 
     // Meteor.call('getList', function(err, data) {

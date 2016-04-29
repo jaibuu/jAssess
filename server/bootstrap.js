@@ -56,7 +56,18 @@ Meteor.startup(function() {
     join: function(name) {
 
       console.log('Hello', name, this.connection.id);
-      return Participants.insert({ name: name, online: true, connection_id: this.connection.id });
+
+      return Participants.upsert({
+          // Selector
+          name: name,
+      }, {
+          // Modifier
+          $set: {
+              name: name,
+              online: true,
+              connection_id: this.connection.id
+          }
+      });
 
 
     },
