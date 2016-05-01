@@ -64,7 +64,7 @@ Meteor.startup(function() {
           $set: {
               name: name,
               online: true,
-              // connection_id:  ['ok', this.connection.id, 'bla']
+              last_activity : new Date()
           },
           '$addToSet' : { "connection_id" : this.connection.id }
       }, removeOldConnectionsFromParticipants);

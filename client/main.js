@@ -32,6 +32,23 @@ UI.registerHelper('indexedArray', function(context, options) {
   }
 });
 
+UI.registerHelper('formatTime', function(context, options) {
+  if(context)
+    return moment().format('HH:mm - ss\\s');
+});
+
+
+UI.registerHelper('fromNowTime', function(context, options) {
+  if(context)
+    return moment(context).fromNow();
+});
+
+
+UI.registerHelper('currentTime', function(context, options) {
+    return moment().format('YYYY/MM/DD, HH:mm - ss\\s');
+});
+
+
 
 Router.route('/',  {
   action: function () {

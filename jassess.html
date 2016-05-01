@@ -23,8 +23,11 @@
               {{ log 'Participants' }}
               {{ log Participants }}
 
+
+                <h4>  {{currentTime}} </h4>
+
                 {{#each Participants}}
-                    <p>{{{this.name}}} - Las Active: {{{ this.last_activity }}}</p> 
+                    <p>{{{this.name}}} - Las Active: {{formatTime this.last_activity }}</p> 
 
                     <ul> 
                     {{#each this.connection_id}}
