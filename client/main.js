@@ -56,12 +56,12 @@ Router.route('/',  {
     }
     
   });
+
 Router.route('/welcome',  {
   action: function () {
     this.render('Welcome');
   }
 });
-
 
 Router.route('/tester', {
   //waitOn: function () {
@@ -69,33 +69,12 @@ Router.route('/tester', {
   //},
 
   action: function () {
-
-    this._interval = setInterval( function(){
-
-      Meteor.call('getSessions', function(err, data) {
-        if (err)
-          console.log(err);
-        Session.set('gotSessions', data);
-      });
-
-
-    }.bind(this) , 1000);
-
-
-    // Meteor.call('getList', function(err, data) {
-    //   if (err)
-    //     console.log(err);
-
-    //   console.log('Call List Data', data);
-    //   Session.set('gotSessions', data);
-    // });
-
     this.render('TesterDashboard');
   }
 });
   Template.TesterDashboard.helpers({ 
-    Sessions : function(){
-      return Session.get('gotSessions');
+    Participants : function(){
+      return Participants.find()
     }
 });
 

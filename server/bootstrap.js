@@ -51,8 +51,6 @@ Meteor.startup(function() {
   }
 
 
-
-
   Meteor.methods({
     join: function(name) {
 
@@ -71,72 +69,51 @@ Meteor.startup(function() {
           '$addToSet' : { "connection_id" : this.connection.id }
       }, removeOldConnectionsFromParticipants);
 
-
-
-
-
-
-    },
-    online: function(isOnline) {
-      if (isOnline == null) {
-        isOnline = true;
-      }
-      return Meteor.users.update(Meteor.userId(), {
-        $set: {
-          online: isOnline
-        }
-      });
-    },
-    getSessions : function(){
-      // console.log(Meteor.server.sessions);
-
-      removeOldConnectionsFromParticipants();
-      return Participants.find( {connection_id : { $in: Object.keys(Meteor.server.sessions)  }} ).fetch()
-    },
-    getList : function(){
-      // console.log(Meteor.server.sessions);
-      return ['asd', 'etc'];
     }
 
   });
 
-/* HELPERS */
-
+  /* HELPERS */
   var _oldsessions = JSON.stringify([]);
 
-  // setTimeout(function(){
+  Meteor.setInterval(function() {
 
-  //   var interval = setInterval( function(){
-  //     if(_oldsessions !=  JSON.stringify(Object.keys(Meteor.server.sessions))){
-  //       removeOldConnectionsFromParticipants();
-  //       _oldsessions = JSON.stringify(Object.keys(Meteor.server.sessions));
-  //     }
+    if(_oldsessions !=  JSON.stringify(Object.keys(Meteor.server.sessions))){
+      removeOldConnectionsFromParticipants();
+      _oldsessions = JSON.stringify(Object.keys(Meteor.server.sessions));
+    }
 
-  //   }, 1000);
-
-
-  // }, 2000);
+  }, 1000);
 
 
+  //cleanup of expired sessions
   var removeOldConnectionsFromParticipants = function(){ 
+    Participants.find().fetch().forEach( function(Participant) {
 
-    //cleanup of expired sessions
+      var old_ids = Participant.connection_id;
+      var old_ids_snapshot = JSON.stringify(old_ids);
 
-      Participants.find().fetch().forEach( function(Participant) {
 
-        var old_ids = Participant.connection_id;
 
-        old_ids = old_ids.filter(function(n) {
-          return Object.keys(Meteor.server.sessions).indexOf(n) != -1;
-        });
-
-        Participants.update({ _id : Participant._id }, { $set : { connection_id :  old_ids  } });
+      var new_ids = old_ids.filter(function(n) {
+        return Object.keys(Meteor.server.sessions).indexOf(n) != -1;
       });
 
+      var new_ids_snapshot = JSON.stringify(new_ids);
+
+      var newData = { $set : { connection_id :  new_ids  } };
+
+      if(old_ids_snapshot != new_ids_snapshot) {
+        newData['$set']['last_activity'] = new Date();
+      }
+
+
+
+
+      Participants.update({ _id : Participant._id },  newData);
+
+    });
   };
-
-
-
 
 });
 
