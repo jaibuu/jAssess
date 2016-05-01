@@ -1,6 +1,44 @@
 // run this when the meteor app is started
 Meteor.startup(function() {
 
+
+  //load test
+  // var loadedTest = HTTP.get(Meteor.absoluteUrl("./tests/staic.json")).data;
+
+  Assets.getText("tests/staic.json", 
+    function(err, result){
+      if(err){
+        console.log("Assets err: " + err);
+      }
+      if(result){
+
+        var loadedTest = JSON.parse(result);
+
+        if(loadedTest.name){
+          console.log("Asset log: "  + "Importing Test");
+          console.log(loadedTest);
+
+
+          Tests.upsert({
+              // Selector
+              name: loadedTest.name,
+          }, {
+              // Modifier
+              $set: loadedTest
+          });
+
+
+        } else {
+          console.log("Assets err: "  + "Invalid test" + loadedTest['name']);
+          console.log(loadedTest);
+        }
+      }
+    }
+  );
+
+
+
+
   // if there are no tests available create sample data
   if (Tests.find().count() === 0) {
 

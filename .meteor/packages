@@ -22,3 +22,4 @@ manuelschoebel:wait-on-lib
 standard-minifier-css
 standard-minifier-js
 momentjs:moment
+http

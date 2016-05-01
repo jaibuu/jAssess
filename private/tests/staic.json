@@ -1,0 +1,36 @@
+{
+	"name" : "staic",
+	"question_types" : [
+		{
+			"name" : "scale_3",
+			"type" : "radio",
+			"values" : [
+				{ "label" : "Nada" },
+				{ "label" : "Algo" },
+				{ "label" : "Mucho" }
+			]
+		}
+	],
+	"questions" : [
+		{"type" : "scale_3", "label" : "Me siento calmado"},
+		{"type" : "scale_3", "label" : "Me encuentro inquieto"},
+		{"type" : "scale_3", "label" : "Me siento nervioso"},
+		{"type" : "scale_3", "label" : "Me encuentro descansado"},
+		{"type" : "scale_3", "label" : "Tengo miedo"},
+		{"type" : "scale_3", "label" : "Estoy relajado"},
+		{"type" : "scale_3", "label" : "Estoy preocupado"},
+		{"type" : "scale_3", "label" : "Me encuentro satisfecho"},
+		{"type" : "scale_3", "label" : "Me siento feliz"},
+		{"type" : "scale_3", "label" : "Me siento seguro"},
+		{"type" : "scale_3", "label" : "Me encuentro bien"},
+		{"type" : "scale_3", "label" : "Me siento molesto"},
+		{"type" : "scale_3", "label" : "Me siento agradable"},
+		{"type" : "scale_3", "label" : "Me encuentro atemorizado"},
+		{"type" : "scale_3", "label" : "Me encuentro confuso"},
+		{"type" : "scale_3", "label" : "Me siento animoso"},
+		{"type" : "scale_3", "label" : "Me siento angustiado"},
+		{"type" : "scale_3", "label" : "Me encuentro alegre"},
+		{"type" : "scale_3", "label" : "Me encuentro contrariado"},
+		{"type" : "scale_3", "label" : "Me siento triste"}
+	]
+ }
