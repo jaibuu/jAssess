@@ -89,11 +89,59 @@ Router.route('/tester', {
     this.render('TesterDashboard');
   }
 });
-  Template.TesterDashboard.helpers({ 
+  Template.TesterDashboard.helpers({
+    Participants : function(){
+      return Participants.find()
+    },
+    Tests : function(){
+      return Tests.find()
+    },
+  });
+  
+  Template.TesterDashboard.events({
+    'click .start-session' : function(event){
+      
+
+      // stop the form from submitting
+      event.preventDefault();
+
+      // get the data we need from the form
+      var session_data = {
+        'created_at' : new Date(),
+        'test_id' : this._id
+      };
+      var session = TestSessions.insert(session_data);
+      console.log('Created session for ', this.name);
+
+
+
+      Meteor.call('beginSession', session, function(err, data) {
+        console.log('Session Started');
+      });
+       
+      // // create the new poll
+      // TestSessions.insert(newTest);
+
+
+    }
+  });
+
+
+
+Router.route('/test', {
+  //waitOn: function () {
+  //  return IRLibLoader.load('//media.twiliocdn.com/sdk/rtc/js/ip-messaging/v0.8/twilio-ip-messaging.min.js');
+  //},
+
+  action: function () {
+    this.render('TestDashboard');
+  }
+});
+  Template.TestDashboard.helpers({
     Participants : function(){
       return Participants.find()
     }
-});
+  });
 
 
 Router.route('/viewer', {
