@@ -77,13 +77,11 @@
       <div class="col-md-6 col-md-offset-3">
           <h1>  {{ TestSession.current_question.label }} </h1>
 
-
           {{#if nextQuestion }}
                   <a href="#" class="next_question">Next Question: {{ nextQuestion.label }} </a>
           {{else}}
                   <a href="#" class="finish_session">Finish Session</a>
           {{/if}}
-
 
 
       </div>
@@ -115,9 +113,13 @@
 
   <!-- LOOP OVER tests AND SHOW EACH -->
   <div class="tests">
-      {{ #each Questions }}
-          {{ >test }}
+
+    <h1>  {{ TestSession.current_question.label }} </h1>
+
+      {{ #each TestSession.current_question.options.values }}
+          {{ this.label }}
       {{ /each }}
+
   </div>
 
 </template>

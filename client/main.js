@@ -63,10 +63,12 @@ Router.route('/',  {
       return Tests.find();
     },
 
-    Questions: function() {
-
-
-
+    TestSession: function() {
+      if(TestSessions.findOne({'active': true}) && TestSessions.findOne({'active': true}).current_question_idx < TestSessions.findOne({'active': true}).test().questions.length){
+        return TestSessions.findOne({'active': true});
+      } else {
+        return false;
+      }
     }
     
   });
