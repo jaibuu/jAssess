@@ -63,7 +63,7 @@ Meteor.startup(function() {
 
 
     IncreaseCurrentTestQuestionIndex: function(){
-      console.log('INCREASING IncreaseCurrentTestQuestionIndex');
+      console.log('INCREASING ac');
       TestSessions.update( {'active': true}, { $inc : { "current_question_idx" : 1 } });
     }
 

@@ -64,12 +64,9 @@ Router.route('/',  {
     },
 
     Questions: function() {
-      if(TestSessions.findOne()){
-          console.log('TestSessions found');
-          return Tests.find(TestSessions.findOne().currentQuestion);
-      } else {
-          console.warn('No TestSessions found');
-      }
+
+
+
     }
     
   });
@@ -156,6 +153,9 @@ Router.route('/session/:_id', {
     'click .finish_session' : function(event){
       event.preventDefault();
 
+      //setting sessions to inactive
+      TestSessions.update( {'_id': TestSessions.findOne({'active': true})._id}, { 'active' : 'false' });
+
       Router.go('/tester');
     },
 
@@ -190,7 +190,7 @@ Router.route('/viewer', {
   Template.ViewerScreen.helpers({
     TestSession: function() {
 
-        if(TestSessions.findOne({'active': true}).current_question_idx < TestSessions.findOne({'active': true}).test().questions.length-1){
+        if(TestSessions.findOne({'active': true}) && TestSessions.findOne({'active': true}).current_question_idx < TestSessions.findOne({'active': true}).test().questions.length){
           return TestSessions.findOne({'active': true});
         } else {
           return false;
