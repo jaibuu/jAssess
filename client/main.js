@@ -90,6 +90,9 @@ Router.route('/tester', {
   }
 });
   Template.TesterDashboard.helpers({
+    AvailableParticipants : function(){
+      return Participants.find({'connection_id': {$not: {$size: 0}}  } ).fetch()
+    },
     Participants : function(){
       return Participants.find()
     },
@@ -101,7 +104,6 @@ Router.route('/tester', {
   Template.TesterDashboard.events({
     'click .start-session' : function(event){
       
-
       // stop the form from submitting
       event.preventDefault();
 
@@ -113,35 +115,71 @@ Router.route('/tester', {
       var session = TestSessions.insert(session_data);
       console.log('Created session for ', this.name);
 
-
-
       Meteor.call('beginSession', session, function(err, data) {
         console.log('Session Started');
-      });
-       
-      // // create the new poll
-      // TestSessions.insert(newTest);
 
+        Router.go('/session/' + session);
+
+      })
 
     }
   });
 
 
-
-Router.route('/test', {
+Router.route('/session/:_id', {
   //waitOn: function () {
   //  return IRLibLoader.load('//media.twiliocdn.com/sdk/rtc/js/ip-messaging/v0.8/twilio-ip-messaging.min.js');
   //},
-
   action: function () {
-    this.render('TestDashboard');
+    this.render('SessionDashboard');
   }
 });
-  Template.TestDashboard.helpers({
+  Template.SessionDashboard.helpers({
     Participants : function(){
       return Participants.find()
+    },
+    TestSession: function() {
+      return TestSessions.findOne({'active': true});
+    },
+    nextQuestion : function (){
+      if(TestSessions.findOne({'active': true})) {
+        if(TestSessions.findOne({'active': true}).current_question_idx < TestSessions.findOne({'active': true}).test().questions.length-1){
+          return TestSessions.findOne({'active': true}).test().questions[  TestSessions.findOne({'active': true}).current_question_idx+1 ];
+        } else {
+          return false;
+        }
+      }
     }
   });
+  
+  Template.SessionDashboard.events({
+    'click .finish_session' : function(event){
+      event.preventDefault();
+
+      Router.go('/tester');
+    },
+
+    'click .next_question' : function(event){
+      event.preventDefault();
+
+      console.log('next_question', TestSessions.findOne({'active': true}).current_question_idx < TestSessions.findOne({'active': true}).test().questions.length-1);
+
+      if(TestSessions.findOne({'active': true}).current_question_idx < TestSessions.findOne({'active': true}).test().questions.length-1) {
+
+        Meteor.call('IncreaseCurrentTestQuestionIndex', function(err, data) {
+          console.log('Current Test Question Index Increased');
+        });
+
+      } else {
+        return false;
+      }
+
+
+
+    }
+
+  });
+
 
 
 Router.route('/viewer', {
@@ -149,10 +187,17 @@ Router.route('/viewer', {
     this.render('ViewerScreen');
   }
 });
+  Template.ViewerScreen.helpers({
+    TestSession: function() {
 
-Template.ViewerScreen.helpers({
-  Question: function() {
-    return Tests.findOne(TestSessions.findOne().currentQuestion);
-  }
-});
+        if(TestSessions.findOne({'active': true}).current_question_idx < TestSessions.findOne({'active': true}).test().questions.length-1){
+          return TestSessions.findOne({'active': true});
+        } else {
+          return false;
+        }
+
+    }
+  });
+
+
 

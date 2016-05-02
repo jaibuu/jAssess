@@ -11,20 +11,31 @@
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
             <h2>Available Tests</h2>
-                <ul> 
-                {{#each Tests}}
-                    <li>
-                        <p>{{{this.name}}} <a href="#" class="start-session">Start Session</a> </p> 
-                    </li>
-                {{/each}}
-                </ul>
+            <ul> 
+            {{#each Tests}}
+                <li>
+                    <p>{{{this.name}}} <a href="#" class="start-session">Start Session</a> </p> 
+                </li>
+            {{/each}}
+            </ul>
+
+
+            <h2>Available Participants</h2>
+            <ul> 
+            {{#each AvailableParticipants}}
+                <li>
+                    <p>{{{this.name}}}</p> 
+                </li>
+            {{/each}}
+            </ul>
+
           </div>
         </div>
     </div>
 </template>
 
 
-<template name="TestDashboard">
+<template name="AdminDashBoard">
   <!-- PULL IN THE POLL CREATION FORM -->
   <div class="container">
     <div class="row">
@@ -33,33 +44,54 @@
       </div>
     </div>
 
+  </div>  
+</template>
+
+
+<template name="SessionDashboard">
+  <div class="container">
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
           <div class="sessions">
-              {{ log 'Participants' }}
-              {{ log Participants }}
+              <h4>  {{currentTime}} </h4>
+              {{#each Participants}}
+                  <p>{{{this.name}}} - Las Active: {{formatTime this.last_activity }}</p> 
 
-
-                <h4>  {{currentTime}} </h4>
-
-                {{#each Participants}}
-                    <p>{{{this.name}}} - Las Active: {{formatTime this.last_activity }}</p> 
-
-                    <ul> 
-                    {{#each this.connection_id}}
-                        <li>
-                            <p>{{{this}}}</p> 
-                        </li>
-                    {{/each}}
-                    </ul>
-                                    
-
-                {{/each}}
+                  <ul> 
+                  {{#each this.connection_id}}
+                      <li>
+                          <p>{{{this}}}</p> 
+                      </li>
+                  {{/each}}
+                  </ul>
+                                  
+              {{/each}}
 
           </div>
 
       </div>
     </div>
+
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+          <h1>  {{ TestSession.current_question.label }} </h1>
+
+
+          {{#if nextQuestion }}
+                  <a href="#" class="next_question">Next Question: {{ nextQuestion.label }} </a>
+          {{else}}
+                  <a href="#" class="finish_session">Finish Session</a>
+          {{/if}}
+
+
+
+      </div>
+    </div>
+
+
+
+
   </div>  
 </template>
 
@@ -73,16 +105,9 @@
   </div>  
 </template>
 
-<template name="Home">
-	<h1>home</h1>
-</template>
-
-
 <template name="ViewerScreen">
-	<h1>  {{ Question.question }} </h1>
-
+	<h1>  {{ TestSession.current_question.label }} </h1>
 </template>
-
 
 
 <template name="TestTaker">

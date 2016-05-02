@@ -3,8 +3,6 @@ Meteor.startup(function() {
 
 
   //load test
-  // var loadedTest = HTTP.get(Meteor.absoluteUrl("./tests/staic.json")).data;
-
   Assets.getText("tests/staic.json", 
     function(err, result){
       if(err){
@@ -36,59 +34,6 @@ Meteor.startup(function() {
     }
   );
 
-
-
-
-  // // if there are no tests available create sample data
-  // if (Tests.find().count() === 0) {
-
-  //   // create sample Tests
-  //   var sampleTests = [
-  //     {
-  //       question: 'Is it awesome?',
-  //       choices: [
-  //         { text: 'Of course!', votes: 0 },
-  //         { text: 'Eh', votes: 0 },
-  //         { text: 'No. I prefer paper', votes: 0 }
-  //       ]
-  //     },
-  //     {
-  //       question: 'Is it working?',
-  //       choices: [
-  //         { text: '100% yes', votes: 0 },
-  //         { text: '200% yes', votes: 0 },
-  //         { text: '300% yes', votes: 0 }
-  //       ]
-  //     }
-  //   ];
-
-  //   // loop over each sample test and insert into database
-  //   _.each(sampleTests, function(test) {
-  //     Tests.insert(test);
-  //   });
-
-  // }
-
-
-
-  if (TestSessions.find().count() === 0) {
-
-    // // create sample TestSessions
-    // var sampleTestSessions = [
-    //   {
-    //     currentQuestion: Tests.findOne()._id,
-    //     active:true
-    //   }
-    // ];
-
-    // // loop over each sample testSession and insert into database
-    // _.each(sampleTestSessions, function(testSession) {
-    //   TestSessions.insert(testSession);
-    // });
-
-  }
-
-
   Meteor.methods({
     join: function(name) {
 
@@ -111,13 +56,15 @@ Meteor.startup(function() {
 
 
     beginSession: function(session_id) {
-
-      console.log(session_id);
-
       TestSessions.update({ 'id' : {'$ne' : session_id} }, {$set: {active: false}}, {multi: true});
       TestSessions.update({'_id' : session_id}, {$set: {active: true}});
+      TestSessions.update({'_id' : session_id}, {$set: {current_question_idx: 0}});
+    },
 
 
+    IncreaseCurrentTestQuestionIndex: function(){
+      console.log('INCREASING IncreaseCurrentTestQuestionIndex');
+      TestSessions.update( {'active': true}, { $inc : { "current_question_idx" : 1 } });
     }
 
   });
@@ -142,8 +89,6 @@ Meteor.startup(function() {
       var old_ids = Participant.connection_id;
       var old_ids_snapshot = JSON.stringify(old_ids);
 
-
-
       var new_ids = old_ids.filter(function(n) {
         return Object.keys(Meteor.server.sessions).indexOf(n) != -1;
       });
@@ -155,9 +100,6 @@ Meteor.startup(function() {
       if(old_ids_snapshot != new_ids_snapshot) {
         newData['$set']['last_activity'] = new Date();
       }
-
-
-
 
       Participants.update({ _id : Participant._id },  newData);
 
