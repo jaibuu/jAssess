@@ -43,9 +43,12 @@ UI.registerHelper('fromNowTime', function(context, options) {
     return moment(context).fromNow();
 });
 
-
 UI.registerHelper('currentTime', function(context, options) {
     return moment().format('YYYY/MM/DD, HH:mm - ss\\s');
+});
+
+UI.registerHelper('equals',  function(v1, v2) {
+    return (v1 == v2);
 });
 
 

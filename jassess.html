@@ -105,7 +105,6 @@
 
 <template name="ViewerScreen">
   	<h1>  {{ TestSession.current_question.label }} </h1>
-
 </template>
 
 
@@ -114,11 +113,38 @@
   <!-- LOOP OVER tests AND SHOW EACH -->
   <div class="tests">
 
-    <h1>  {{ TestSession.current_question.label }} </h1>
+    <h1> {{ TestSession.current_question.label }} </h1>
+        
+      <form action="">
+        {{#with TestSession.current_question.options}}
 
-      {{ #each TestSession.current_question.options.values }}
-          {{ this.label }}
-      {{ /each }}
+          {{#if equals type 'radio' }}
+
+          <div class="action-wrapper">
+            <div class="action-labels">
+              {{ #each values }}
+                <div class="action-label">
+                  <h2>{{ this.label }}</h2>
+                </div>
+              {{ /each }}
+            </div>
+            <div class="action-inputs">
+              {{ #each values }}
+                <div class="action-input">
+                  <input type="radio" name="selection" value="{{ @index }}">
+                </div>
+              {{ /each }}
+            </div>
+          </div>
+
+          {{else}}
+
+            Not radio
+
+          {{/if}}
+
+        {{/with}}
+      </form>
 
   </div>
 
