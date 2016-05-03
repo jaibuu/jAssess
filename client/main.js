@@ -76,6 +76,19 @@ Router.route('/',  {
     
   });
 
+  Template.TestTaker.events({
+
+    // handle the form submission
+    'submit form': function(event) {
+
+      // stop the form from submitting
+      event.preventDefault();
+
+      console.log('Submitted value', event.target, event.target.elements.selection.value, event.target.selection.value);
+    }
+
+  });
+
 Router.route('/welcome',  {
   action: function () {
     this.render('Welcome');
