@@ -80,14 +80,49 @@ Router.route('/',  {
 
     // handle the form submission
     'submit form': function(event) {
-
       // stop the form from submitting
       event.preventDefault();
-
-      console.log('Submitted value', event.target, event.target.elements.selection.value, event.target.selection.value);
+      Template.TestTaker.ProcessSubmission(event.target);
+    },
+    'change input[type="radio"]': function(event) {
+      event.preventDefault();
+      Template.TestTaker.ProcessSubmission(event.target.form);
     }
 
   });
+
+  Template.TestTaker.ProcessSubmission = function(form){
+
+    if(form.dataset.type == "radio"){
+
+      console.log('processed', form.elements.selection.value, form.dataset.type);
+      //Answers.find({}, {sort: {_id:-1}, limit: 1 } ).fetch()
+
+      var newAnswer = {
+        created_at: new Date(),
+        // session_id
+        // name
+        connection_id : Meteor.default_connection._lastSessionId,
+        // test_id
+        // test_name
+        // question_idx
+        // question_label
+        // option
+        // option_label
+
+        option: form.elements.selection.value
+
+      };
+      Answers.insert(newAnswer);
+
+
+      } else {
+        console.log('No handler for this type of form');
+      }
+
+  };
+
+
 
 Router.route('/welcome',  {
   action: function () {

@@ -106,6 +106,18 @@ Meteor.startup(function() {
     });
   };
 
+
+
+  Meteor.onConnection(function (conn) {
+    var connId = conn.id;
+
+    console.log('welcome, ', connId);
+    conn.onClose(function () {
+      console.log('bye ', connId);
+    });
+  });
+
+
 });
 
 

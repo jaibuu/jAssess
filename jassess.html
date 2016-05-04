@@ -114,40 +114,43 @@
   <div class="tests">
 
     <h1> {{ TestSession.current_question.label }} </h1>
-        
-      <form action="">
-        {{#with TestSession.current_question.options}}
+      {{#with TestSession.current_question.options}}
 
-          {{#if equals type 'radio' }}
+        <form action="" data-type="{{ type }}">
 
-          <div class="action-wrapper">
-            <div class="action-labels">
-              {{ #each values }}
-                <div class="action-label">
-                  <h2>{{ this.label }}</h2>
-                </div>
-              {{ /each }}
+            {{#if equals type 'radio' }}
+
+            <div class="action-wrapper">
+              <div class="action-labels">
+                {{ #each values }}
+                  <div class="action-label">
+
+                    <label for="radio_{{ @index }}">
+                      <h2>{{ this.label }}</h2>
+                    </label>
+                  </div>
+                {{ /each }}
+              </div>
+              <div class="action-inputs">
+                {{ #each values }} 
+                  <div class="action-input">
+                    <input type="radio" name="selection" value="{{ @index }}" id="radio_{{ @index }}">
+                  </div>
+                {{ /each }}
+              </div>
             </div>
-            <div class="action-inputs">
-              {{ #each values }}
-                <div class="action-input">
-                  <input type="radio" name="selection" value="{{ @index }}">
-                </div>
-              {{ /each }}
-            </div>
-          </div>
 
-          {{else}}
+            {{else}}
 
-            Not radio
+              Not radio
 
-          {{/if}}
+            {{/if}}
 
-        {{/with}}
 
-        <button type="submit" class="btn btn-lg btn-primary btn-block">Siguiente</button>
+          <button type="submit" class="btn btn-lg btn-primary btn-block">Siguiente</button>
 
-      </form>
+        </form>
+      {{/with}}
 
   </div>
 
