@@ -96,20 +96,18 @@ Router.route('/',  {
     if(form.dataset.type == "radio"){
 
       console.log('processed', form.elements.selection.value, form.dataset.type);
-      //Answers.find({}, {sort: {_id:-1}, limit: 1 } ).fetch()
+      //Answers.find({}, {sort: {created_at:-1}, limit: 1 } ).fetch()
 
       var newAnswer = {
         created_at: new Date(),
-        // session_id
-        // name
+        session_id: TestSessions.findOne({'active': true})._id,
+        name: localStorage.getItem("test_username"),
         connection_id : Meteor.default_connection._lastSessionId,
-        // test_id
-        // test_name
-        // question_idx
-        // question_label
-        // option
-        // option_label
-
+        test_id: TestSessions.findOne({'active': true}).test()._id,
+        test_name: TestSessions.findOne({'active': true}).test().name,
+        question_idx: TestSessions.findOne({'active': true}).current_question_idx,
+        question_label: TestSessions.findOne({'active': true}).current_question().label,
+        option_label: TestSessions.findOne({'active': true}).current_question().options.values[   form.elements.selection.value   ].label,
         option: form.elements.selection.value
 
       };
