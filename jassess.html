@@ -140,10 +140,14 @@
 <template name="TestTaker">
 
   <!-- LOOP OVER tests AND SHOW EACH -->
+
   <div class="tests">
 
-    <h1> {{ TestSession.current_question.label }} </h1>
-      {{#with TestSession.current_question.options}}
+
+  {{#with TestSession.current_question}}
+
+    <h1> {{ label }} - {{ lastAnswer.option_label }} </h1>
+      {{#with options}}
 
         <form action="" data-type="{{ type }}">
 
@@ -180,7 +184,7 @@
 
         </form>
       {{/with}}
-
+    {{/with}}
   </div>
 
 </template>

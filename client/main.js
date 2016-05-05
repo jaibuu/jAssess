@@ -59,11 +59,28 @@ Router.route('/',  {
     this.render('TestTaker');
   }
 });
+  
 
   Template.TestTaker.helpers({
     
     Tests: function() {
       return Tests.find();
+    },
+
+    lastAnswer: function() {
+
+      if(!TestSessions.findOne({'active': true}) ) {
+        return false;
+      }
+
+      //Are there any answers already for this test, this person, and this question number?
+      return Answers.findOne({
+        // connection_id : Meteor.default_connection._lastSessionId,
+        name: localStorage.getItem("test_username"),
+        test_id: TestSessions.findOne({'active': true}).test()._id,
+        question_idx: TestSessions.findOne({'active': true}).current_question_idx
+      });
+
     },
 
     TestSession: function() {
@@ -95,11 +112,13 @@ Router.route('/',  {
 
     if(form.dataset.type == "radio"){
 
+      window._form = form;
+
       console.log('processed', form.elements.selection.value, form.dataset.type);
       //Answers.find({}, {sort: {created_at:-1}, limit: 1 } ).fetch()
 
-      var newAnswer = {
-        created_at: new Date(),
+      Template.TestTaker.currentQuestionSubmission = {
+        created_at: new Date(),   
         session_id: TestSessions.findOne({'active': true})._id,
         name: localStorage.getItem("test_username"),
         connection_id : Meteor.default_connection._lastSessionId,
@@ -109,14 +128,15 @@ Router.route('/',  {
         question_label: TestSessions.findOne({'active': true}).current_question().label,
         option_label: TestSessions.findOne({'active': true}).current_question().options.values[   form.elements.selection.value   ].label,
         option: form.elements.selection.value
-
       };
+
+      var newAnswer =  Template.TestTaker.currentQuestionSubmission;
+
       Answers.insert(newAnswer);
 
-
-      } else {
-        console.log('No handler for this type of form');
-      }
+    } else {
+      console.log('No handler for this type of form');
+    }
 
   };
 
