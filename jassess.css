@@ -4,3 +4,23 @@
 body {
 	text-align: center;
 }
+
+h1 {
+	margin-bottom: 1em;
+}
+
+.action-label {
+	display: inline-block;
+}
+.action-input {
+	display: inline-block;
+}
+
+.action-wrapper {
+	margin-bottom: 2em;
+}
+
+form[data-type="radio"] .action-label,
+form[data-type="radio"] .action-input {
+	width: 5em;
+}

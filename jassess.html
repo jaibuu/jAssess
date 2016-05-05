@@ -1,9 +1,38 @@
 <head>
   <title>jassess</title>
+
+
+
+
+
+    <!-- Loading Bootstrap -->
+    <link href="flat-ui/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="flat-ui/css/flat-ui.min.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="flat-ui/js/vendor/html5shiv.js"></script>
+      <script src="flat-ui/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
 </head>
 
 <body>
 
+
+
+
+
+
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="flat-ui/js/vendor/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="flat-ui/js/vendor/video.js"></script>
+    <script src="flat-ui/js/flat-ui.min.js"></script>
 
 </body>
 <template name="TesterDashboard">
@@ -126,7 +155,7 @@
                   <div class="action-label">
 
                     <label for="radio_{{ @index }}">
-                      <h2>{{ this.label }}</h2>
+                      {{ this.label }}
                     </label>
                   </div>
                 {{ /each }}
