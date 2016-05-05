@@ -143,54 +143,50 @@
 
   <div class="tests">
 
-  {{#if lastAnswer}}
-    <a class="btn btn-lg btn-warning btn-block reject">Cambiar Respuesta - {{ lastAnswer.option_label }}</a>
-  {{else}}
-    {{#with TestSession.current_question}}
+    {{#if lastAnswer}}
+      <a class="btn btn-lg btn-warning btn-block reject">Cambiar Respuesta - {{ lastAnswer.option_label }}</a>
+    {{else}}
+      {{#with TestSession.current_question}}
 
-      <h1> {{ label }} </h1>
-      {{#with options}}
+        <h1> {{ label }} </h1>
+        {{#with options}}
 
-        <form action="" data-type="{{ type }}">
+          <form action="" data-type="{{ type }}">
 
-          {{#if equals type 'radio' }}
+            {{#if equals type 'radio' }}
 
-            <div class="action-wrapper">
-              <div class="action-labels">
-                {{ #each values }}
-                  <div class="action-label">
+              <div class="action-wrapper">
+                <div class="action-labels">
+                  {{ #each values }}
+                    <div class="action-label">
 
-                    <label for="radio_{{ @index }}">
-                      {{ this.label }}
-                    </label>
-                  </div>
-                {{ /each }}
+                      <label for="radio_{{ @index }}">
+                        {{ this.label }}
+                      </label>
+                    </div>
+                  {{ /each }}
+                </div>
+                <div class="action-inputs">
+                  {{ #each values }} 
+                    <div class="action-input">
+                      <input type="radio" name="selection" value="{{ @index }}" id="radio_{{ @index }}">
+                    </div>
+                  {{ /each }}
+                </div>
               </div>
-              <div class="action-inputs">
-                {{ #each values }} 
-                  <div class="action-input">
-                    <input type="radio" name="selection" value="{{ @index }}" id="radio_{{ @index }}">
-                  </div>
-                {{ /each }}
-              </div>
-            </div>
 
-            {{else}}
+              {{else}}
 
-              Not radio
+                Not radio
 
-            {{/if}}
+              {{/if}}
 
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Siguiente</button>
 
-          <button type="submit" class="btn btn-lg btn-primary btn-block">Siguiente</button>
-
-
-
-
-        </form>
+          </form>
+        {{/with}}
       {{/with}}
-    {{/with}}
-  {{/if}}
+    {{/if}}
 
 
 
