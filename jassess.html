@@ -143,15 +143,17 @@
 
   <div class="tests">
 
+  {{#if lastAnswer}}
+    <a class="btn btn-lg btn-warning btn-block reject">Cambiar Respuesta - {{ lastAnswer.option_label }}</a>
+  {{else}}
+    {{#with TestSession.current_question}}
 
-  {{#with TestSession.current_question}}
-
-    <h1> {{ label }} - {{ lastAnswer.option_label }} </h1>
+      <h1> {{ label }} </h1>
       {{#with options}}
 
         <form action="" data-type="{{ type }}">
 
-            {{#if equals type 'radio' }}
+          {{#if equals type 'radio' }}
 
             <div class="action-wrapper">
               <div class="action-labels">
@@ -182,14 +184,16 @@
 
           <button type="submit" class="btn btn-lg btn-primary btn-block">Siguiente</button>
 
-          {{#if lastAnswer}}
-            <a class="btn btn-lg btn-warning btn-block reject">Cambiar Respuesta</a>
-          {{/if}}
+
 
 
         </form>
       {{/with}}
     {{/with}}
+  {{/if}}
+
+
+
   </div>
 
 </template>
