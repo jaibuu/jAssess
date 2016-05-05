@@ -60,6 +60,22 @@ Router.route('/',  {
   }
 });
   
+  Template.TestTaker.findLastAnswer = function() {
+
+    if(!TestSessions.findOne({'active': true}) ) {
+      return false;
+    }
+
+    //Are there any answers already for this test, this person, and this question number?
+
+    return Answers.findOne({
+      // connection_id : Meteor.default_connection._lastSessionId,
+      name: localStorage.getItem("test_username"),
+      test_id: TestSessions.findOne({'active': true}).test()._id,
+      question_idx: TestSessions.findOne({'active': true}).current_question_idx
+    });
+
+  };
 
   Template.TestTaker.helpers({
     
@@ -67,21 +83,7 @@ Router.route('/',  {
       return Tests.find();
     },
 
-    lastAnswer: function() {
-
-      if(!TestSessions.findOne({'active': true}) ) {
-        return false;
-      }
-
-      //Are there any answers already for this test, this person, and this question number?
-      return Answers.findOne({
-        // connection_id : Meteor.default_connection._lastSessionId,
-        name: localStorage.getItem("test_username"),
-        test_id: TestSessions.findOne({'active': true}).test()._id,
-        question_idx: TestSessions.findOne({'active': true}).current_question_idx
-      });
-
-    },
+    lastAnswer: Template.TestTaker.findLastAnswer,
 
     TestSession: function() {
       if(TestSessions.findOne({'active': true}) && TestSessions.findOne({'active': true}).current_question_idx < TestSessions.findOne({'active': true}).test().questions.length){
@@ -104,6 +106,11 @@ Router.route('/',  {
     'change input[type="radio"]': function(event) {
       event.preventDefault();
       Template.TestTaker.ProcessSubmission(event.target.form);
+    },
+    'click .reject' : function(event){
+      //> Answers.findOne({}, {"sort": {"created_at": -1}})
+      event.preventDefault();
+      Answers.update(Template.TestTaker.findLastAnswer()._id, { 'rejected' : true });
     }
 
   });
@@ -115,7 +122,6 @@ Router.route('/',  {
       window._form = form;
 
       console.log('processed', form.elements.selection.value, form.dataset.type);
-      //Answers.find({}, {sort: {created_at:-1}, limit: 1 } ).fetch()
 
       Template.TestTaker.currentQuestionSubmission = {
         created_at: new Date(),   
@@ -132,6 +138,8 @@ Router.route('/',  {
 
       var newAnswer =  Template.TestTaker.currentQuestionSubmission;
 
+      // Template.TestTaker._last_answer_id = Answers.insert(newAnswer); // this wouldn't work for multiple sessions
+      if( Template.TestTaker.findLastAnswer() ) Answers.update(Template.TestTaker.findLastAnswer()._id, { 'rejected' : true });
       Answers.insert(newAnswer);
 
     } else {
