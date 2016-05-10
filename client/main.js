@@ -66,11 +66,12 @@ Router.route('/',  {
       return false;
     }
 
-    //Are there any answers already for this test, this person, and this question number?
+    //Are there any answers already for this test, this person, and this question number for this session?
 
     return Answers.findOne({
       // connection_id : Meteor.default_connection._lastSessionId,
       name: localStorage.getItem("test_username"),
+      session_id: TestSessions.findOne({'active': true})._id,
       test_id: TestSessions.findOne({'active': true}).test()._id,
       question_idx: TestSessions.findOne({'active': true}).current_question_idx
     });
