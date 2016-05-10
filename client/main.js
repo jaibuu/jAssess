@@ -67,6 +67,15 @@ Router.route('/',  {
     TestApp.login()
 
     this.render('TestTaker');
+
+     // Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).observe({
+     //    changed: function(newDoc, oldDoc) {
+     //      console.log('changed', newDoc, oldDoc);
+     //    }
+
+     //  });
+
+
   }
 });
   
@@ -288,4 +297,9 @@ Router.route('/viewer', {
   });
 
 
+
+//current name:   Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name
+
+
+ 
 

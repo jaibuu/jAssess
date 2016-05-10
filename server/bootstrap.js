@@ -39,6 +39,7 @@ Meteor.startup(function() {
 
       console.log('Hello', participant, this.connection.id);
 
+      //checking for new user, avoiding collision 
       if(participant.isNew == true){
 
         // if(Participants.find({'name' : { $regex : /^ sad asd$/i }  , 'connection_id': {$not: {$size: 0}}  } ).fetch().length)
@@ -46,21 +47,39 @@ Meteor.startup(function() {
           return "Nombre ya utilizado";
       }
 
-      Participants.upsert({
-          // Selector
-          name: participant.name.trim()
-      }, {
-          // Modifier
-          $set: {
-              name: participant.name.trim(),
-              age: participant.age,
-              online: true,
-              last_activity : new Date()
-          },
-          '$addToSet' : { "connection_id" : this.connection.id }
-      }, removeOldConnectionsFromParticipants);
+      //checking for name changes
+      if(Participants.findOne( {connection_id : this.connection.id } )) {
 
+        Participants.upsert({
+            // Selector
+            connection_id: this.connection.id
+        }, {
+            // Modifier
+            $set: {
+                name: participant.name.trim(),
+                age: participant.age,
+                last_activity : new Date()
+            }
+        }, removeOldConnectionsFromParticipants);
 
+      } else {
+        // Handling multiple sessions on same browser, differnt session IDs but same name
+
+        Participants.upsert({
+            // Selector
+            name: participant.name.trim()
+        }, {
+            // Modifier
+            $set: {
+                name: participant.name.trim(),
+                age: participant.age,
+                online: true,
+                last_activity : new Date()
+            },
+            '$addToSet' : { "connection_id" : this.connection.id }
+        }, removeOldConnectionsFromParticipants);
+
+      }
 
       return 0;
 
