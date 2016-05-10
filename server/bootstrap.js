@@ -35,22 +35,34 @@ Meteor.startup(function() {
   );
 
   Meteor.methods({
-    join: function(name) {
+    join: function(participant) {
 
-      console.log('Hello', name, this.connection.id);
+      console.log('Hello', participant, this.connection.id);
+
+      if(participant.isNew == true){
+
+        // if(Participants.find({'name' : { $regex : /^ sad asd$/i }  , 'connection_id': {$not: {$size: 0}}  } ).fetch().length)
+        if(Participants.find({'name' : { $regex : new RegExp("^" + participant.name.trim(), "i") }  , 'connection_id': {$not: {$size: 0}}  } ).fetch().length)
+          return "Nombre ya utilizado";
+      }
 
       Participants.upsert({
           // Selector
-          name: name,
+          name: participant.name.trim()
       }, {
           // Modifier
           $set: {
-              name: name,
+              name: participant.name.trim(),
+              age: participant.age,
               online: true,
               last_activity : new Date()
           },
           '$addToSet' : { "connection_id" : this.connection.id }
       }, removeOldConnectionsFromParticipants);
+
+
+
+      return 0;
 
     },
 

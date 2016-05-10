@@ -2,11 +2,21 @@
 
 <form> 
     <div class="form-group">
-        <label>¿Cuál es tu nombre?</label>
-        <input type="text" name="name" class="form-control" placeholder="Nombre">
+
+        {{#if TestUsername }}
+            <label>Hola {{ TestUsername }}, ¿cuántos años tienes?</label>
+            <input name="age" class="form-control" placeholder="Números del 8 al 16" type="number" size="2" min="7" max="16" value="8" required >
+        {{else}}
+            <label>¿Cuál es tu nombre y apellido?</label>
+            <input type="text" name="name" class="form-control" placeholder="Nombre y Apellido" autocomplete="off" required>
+         <!-- <a href="#" class="finish_session">Finish Session</a> -->
+        {{/if}}
+
+        <p class="text-danger">  {{ ErrorMessage }}  </p> 
+
     </div>
 
-    <button type="submit" class="btn btn-lg btn-primary btn-block">Entrar</button>
+    <button type="submit" class="btn btn-lg btn-primary btn-block">{{ Label }}</button>
 </form>
 
 </template>
