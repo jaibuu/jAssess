@@ -30,3 +30,9 @@ form[data-type="radio"] .action-input {
 .tile[data-answered="true"]{
 	background-color: #8BE8A8;
 }
+
+.corner {
+	text-align: left;
+	font-size: 0.8em;
+	color: gray;
+}

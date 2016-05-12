@@ -27,13 +27,18 @@ Template.registerHelper("log", function(something) {
   console.log(something);
 });
 
-Template.registerHelper("myname", function() {
+Template.registerHelper("myName", function() {
   return Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name;
+});
+
+Template.registerHelper("Settings", function() {
+  return Settings.findOne();
 });
 
 Template.registerHelper("hasAnswered", function(participantName) {
   return !!Answers.findOne({
       // connection_id : Meteor.default_connection._lastSessionId,
+      // rejected: false,
       name: participantName,
       session_id: TestSessions.findOne({'active': true})._id,
       test_id: TestSessions.findOne({'active': true}).test()._id,
@@ -107,11 +112,12 @@ Router.route('/',  {
 
     return Answers.findOne({
       // connection_id : Meteor.default_connection._lastSessionId,
+      // rejected: true,
       name: Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name,
       session_id: TestSessions.findOne({'active': true})._id,
       test_id: TestSessions.findOne({'active': true}).test()._id,
       question_idx: TestSessions.findOne({'active': true}).current_question_idx
-    });
+    }, {"sort": {"created_at": -1}});
 
   };
 
@@ -123,6 +129,9 @@ Router.route('/',  {
 
     lastAnswer: Template.TestTaker.findLastAnswer,
 
+    canAnswer: function() {
+      return (!Template.TestTaker.findLastAnswer() || Template.TestTaker.findLastAnswer().rejected == true);
+    },
     TestSession: function() {
       if(TestSessions.findOne({'active': true}) && TestSessions.findOne({'active': true}).current_question_idx < TestSessions.findOne({'active': true}).test().questions.length){
         return TestSessions.findOne({'active': true});
@@ -148,7 +157,9 @@ Router.route('/',  {
     'click .reject' : function(event){
       //> Answers.findOne({}, {"sort": {"created_at": -1}})
       event.preventDefault();
-      Answers.update(Template.TestTaker.findLastAnswer()._id, { 'rejected' : true });
+
+      console.log('REJECT IT');
+      Answers.update(Template.TestTaker.findLastAnswer()._id, {$set : { 'rejected' : true }});
     }
 
   });
@@ -177,13 +188,14 @@ Router.route('/',  {
         question_idx: TestSessions.findOne({'active': true}).current_question_idx,
         question_label: TestSessions.findOne({'active': true}).current_question().label,
         option_label: TestSessions.findOne({'active': true}).current_question().options.values[   form.elements.selection.value   ].label,
-        option: form.elements.selection.value
+        option: form.elements.selection.value,
+        rejected: false
       };
 
       var newAnswer =  Template.TestTaker.currentQuestionSubmission;
 
       // Template.TestTaker._last_answer_id = Answers.insert(newAnswer); // this wouldn't work for multiple sessions
-      if( Template.TestTaker.findLastAnswer() ) Answers.update(Template.TestTaker.findLastAnswer()._id, { 'rejected' : true });
+      if( Template.TestTaker.findLastAnswer() ) Answers.update(Template.TestTaker.findLastAnswer()._id, {$set : { 'rejected' : true }});
       Answers.insert(newAnswer);
 
     } else {
@@ -281,10 +293,7 @@ Router.route('/session/:_id', {
 
         var result = Participants.update({_id: this._id}, { name:  event.target.form.name.value});
 
-           console.log(    result,  this._id  );
-
-
-        // console.log(event.target.form.name.value, event.target.closest('form').querySelector('input').value);
+           console.log( result,  this._id  );
 
 
 
@@ -294,7 +303,7 @@ Router.route('/session/:_id', {
 
   Template.SessionDashboard.helpers({
     SessionParticipants : function(){
-      return Participants.find({last_activity : {$gt: TestSessions.findOne({active:true}).created_at }})
+      return Participants.find({last_activity : {$gt: TestSessions.findOne({active:true}).created_at }}, {"sort": {"created_at": -1}})
     },
     Participants : function(){
       return Participants.find()
