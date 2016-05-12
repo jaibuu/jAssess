@@ -1,0 +1,50 @@
+{
+	"name" : "MESSY",
+	"question_types" : [
+		{
+			"name" : "scale_4",
+			"type" : "radio",
+			"values" : [
+				{ "label" : "Nunca" },
+				{ "label" : "A veces" },
+				{ "label" : "A menudo" },
+				{ "label" : "Siempre" }
+			]
+		}
+	],
+	"questions" : [
+		{"type" : "scale_4", "label" : "Suelo hacer reír a los demás"},
+		{"type" : "scale_4", "label" : "Me enfado con facilidad."},
+		{"type" : "scale_4", "label" : "Interrumpo a los demás cuando están hablando."},
+		{"type" : "scale_4", "label" : "Me gusta presumir ante los demás de las cosas que tengo."},
+		{"type" : "scale_4", "label" : "Miro a la gente cuando hablo con ella."},
+		{"type" : "scale_4", "label" : "Tengo muchos amigos/as"},
+		{"type" : "scale_4", "label" : "Pego cuando estoy furioso."},
+		{"type" : "scale_4", "label" : "Ayudo a un amigo que está herido."},
+		{"type" : "scale_4", "label" : "Me enfado y me pongo celoso cuando a otras personas les va bien las cosas."},
+		{"type" : "scale_4", "label" : "Me siento feliz cuando otra persona está bien."},
+		{"type" : "scale_4", "label" : "Me gusta sacar defectos y fallos a los demás."},
+		{"type" : "scale_4", "label" : "Siempre quiero ser el primero."},
+		{"type" : "scale_4", "label" : "Me dirijo a la gente y entablo conversación"},
+		{"type" : "scale_4", "label" : "Digo \"gracias\" y soy feliz cuando la gente hace algo por mí."},
+		{"type" : "scale_4", "label" : "Me gusta estar solo."},
+		{"type" : "scale_4", "label" : "Temo hablarle a la gente."},
+		{"type" : "scale_4", "label" : "Sé cómo hacer amigos."},
+		{"type" : "scale_4", "label" : "Me burlo de los demás."},
+		{"type" : "scale_4", "label" : "Doy la cara por mis amigos."},
+		{"type" : "scale_4", "label" : "Miro a la gente cuando está hablando."},
+		{"type" : "scale_4", "label" : "Comparto lo que tengo con otros."},
+		{"type" : "scale_4", "label" : "Llamo a la gente por sus nombres."},
+		{"type" : "scale_4", "label" : "Me siento bien si ayudo a alguien."},
+		{"type" : "scale_4", "label" : "Hago preguntas cuando hablo con los demás."},
+		{"type" : "scale_4", "label" : "Veo a menudo a mis amigos."},
+		{"type" : "scale_4", "label" : "Me pongo triste cuando ofendo a alguien."},
+		{"type" : "scale_4", "label" : "Me meto en peleas con frecuencia."},
+		{"type" : "scale_4", "label" : "Hago cosas buenas por la gente que se porta bien conmigo."},
+		{"type" : "scale_4", "label" : "Me río de los chistes e historias divertidas que cuentan los demás."},
+		{"type" : "scale_4", "label" : "Me vengo de quien me ofende."},
+		{"type" : "scale_4", "label" : "Pienso que ganar es lo más importante."},
+		{"type" : "scale_4", "label" : "Me encuentro inquieto"}
+
+	]
+ }

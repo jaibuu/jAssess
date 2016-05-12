@@ -39,6 +39,36 @@ Meteor.startup(function() {
       }
     }
   );
+  Assets.getText("tests/messy.json", 
+    function(err, result){
+      if(err){
+        console.log("Assets err: " + err);
+      }
+      if(result){
+
+        var loadedTest = JSON.parse(result);
+
+        if(loadedTest.name){
+          console.log("Asset log: "  + "Importing Test");
+          console.log(loadedTest);
+
+
+          Tests.upsert({
+              // Selector
+              name: loadedTest.name,
+          }, {
+              // Modifier
+              $set: loadedTest
+          });
+
+
+        } else {
+          console.log("Assets err: "  + "Invalid test" + loadedTest['name']);
+          console.log(loadedTest);
+        }
+      }
+    }
+  );
 
   Meteor.methods({
     join: function(participant) {
