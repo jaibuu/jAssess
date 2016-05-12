@@ -101,6 +101,12 @@ Meteor.startup(function() {
     IncreaseCurrentTestQuestionIndex: function(){
       console.log('INCREASING ac');
       TestSessions.update( {'active': true}, { $inc : { "current_question_idx" : 1 } });
+    },
+
+
+    DecreaseCurrentTestQuestionIndex: function(){
+      console.log('DECREASING ac');
+      TestSessions.update( {'active': true}, { $inc : { "current_question_idx" : -1 } });
     }
 
   });

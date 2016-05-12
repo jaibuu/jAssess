@@ -85,7 +85,7 @@ Router.route('/',  {
     //Are there any answers already for this test, this person, and this question number for this session?
 
     if(!Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} )){
-      alert('Error: Nombre nulo');
+       TestApp.login({resume:true});
     }
 
     return Answers.findOne({
@@ -145,7 +145,7 @@ Router.route('/',  {
       console.log('processed', form.elements.selection.value, form.dataset.type);
 
     if(!Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} )){
-      alert('Error: Nombre nulo');
+       TestApp.login({resume:true});
     }
 
 
@@ -266,6 +266,15 @@ Router.route('/session/:_id', {
           return false;
         }
       }
+    },
+    prevQuestion : function (){
+      if(TestSessions.findOne({'active': true})) {
+        if(TestSessions.findOne({'active': true}).current_question_idx > 0){
+          return TestSessions.findOne({'active': true}).test().questions[  TestSessions.findOne({'active': true}).current_question_idx-1 ];
+        } else {
+          return false;
+        }
+      }
     }
   });
   
@@ -288,6 +297,22 @@ Router.route('/session/:_id', {
 
         Meteor.call('IncreaseCurrentTestQuestionIndex', function(err, data) {
           console.log('Current Test Question Index Increased');
+        });
+
+      } else {
+        return false;
+      }
+
+    },
+
+    'click .prev_question' : function(event){
+      event.preventDefault();
+
+
+      if(TestSessions.findOne({'active': true}).current_question_idx > 0) {
+
+        Meteor.call('DecreaseCurrentTestQuestionIndex', function(err, data) {
+          console.log('Current Test Question Index Decreased');
         });
 
       } else {
