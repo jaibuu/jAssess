@@ -43,7 +43,14 @@ App.prototype.login = function(options = {new:false}){
 }
 
 App.prototype.logout = function(){
-    localStorage.removeItem("test_username");
+	Session.delete('test_username');
+	Session.delete('test_age');
+	localStorage.removeItem("test_username");
+	localStorage.removeItem("test_age");
+
+	if( !Router.current().route.path() == '/welcome' )
+		Router.go('/welcome');
+	location.reload();
 }
 
 window.TestApp = new App();

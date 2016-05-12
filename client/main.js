@@ -20,9 +20,12 @@ Meteor.startup(function() {
 var em = window.em = new EventDDP('twoway', Meteor.connection);
 
 //Set Listeners
-
+  
   em.addListener('forceNameChange', function() {
     console.log('Server says forceNameChange', _.toArray(arguments));
+
+    if(Router.current().route.path() == '/' || Router.current().route.path() == '/welcome')
+      TestApp.logout();
   }); 
 
 
@@ -65,6 +68,7 @@ hasAnswered = function(participantName) {
 
 
 hasRejected = function(participantName){
+  if(!getAnswer(participantName)) return false;
   return getAnswer(participantName).rejected;
 };
 
