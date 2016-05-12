@@ -203,6 +203,16 @@ Meteor.startup(function() {
   });
 
 
+  Meteor.publish("SessionAnswers", function () {
+    ReactiveAggregate(this, Answers, [{
+      $group: {
+        _id: "$name",
+        answers: { $push: "$$ROOT" }
+      }
+    }], { clientCollection: "SessionAnswersLive" });
+  });
+
+
 });
 
 

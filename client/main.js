@@ -306,6 +306,9 @@ Router.route('/session/:_id', {
   //  return IRLibLoader.load('//media.twiliocdn.com/sdk/rtc/js/ip-messaging/v0.8/twilio-ip-messaging.min.js');
   //},
   action: function () {
+    console.log('subs');
+    SessionAnswers = Meteor.subscribe("SessionAnswers");
+
     this.render('SessionDashboard');
   }
 });
@@ -333,6 +336,29 @@ Router.route('/session/:_id', {
       if(TestSessions.findOne({active:true}))
       return Participants.find({last_activity : {$gt: TestSessions.findOne({active:true}).created_at }}, {"sort": {"created_at": -1}})
     },
+    // SessionAnswers: function(){
+
+    //   // //Incomplete, it should show only one per person
+    //   // return Answers.findOne({
+    //   //   // connection_id : Meteor.default_connection._lastSessionId,
+    //   //   // rejected: false,
+    //   //   session_id: TestSessions.findOne({'active': true})._id,
+    //   //   test_id: TestSessions.findOne({'active': true}).test()._id,
+    //   //   question_idx: TestSessions.findOne({'active': true}).current_question_idx
+    //   // }, {"sort": {"created_at": -1}});
+
+
+    //     console.log("I'm working");
+    //     return SessionAnswers.find(
+    //       {
+    //         session_id: TestSessions.findOne({'active': true})._id,
+    //         test_id: TestSessions.findOne({'active': true}).test()._id,
+    //         question_idx: TestSessions.findOne({'active': true}).current_question_idx
+    //       }
+    //     );
+
+
+    // },
     Participants : function(){
       return Participants.find()
     },
