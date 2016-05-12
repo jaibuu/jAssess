@@ -3,13 +3,16 @@ var App = function(){
 
 }
 
-App.prototype.login = function(isNew = false){
+App.prototype.login = function(options = {new:false}){
+
+
+
     if(!!Session.get("test_username")){
 
         Meteor.call('join', {
         	'name': Session.get('test_username'),
         	'age' : Session.get('test_age'),
-        	'isNew' : isNew
+        	'isNew' : !!options.new
     	}, function(error, response){
 				
 			if(error) {
@@ -20,11 +23,13 @@ App.prototype.login = function(isNew = false){
 				if(response == 0) {
 				    localStorage.setItem("test_username", Session.get('test_username'));
 				    localStorage.setItem("test_age", Session.get('test_age'));
-			        Router.go('/') 
+
+				    if(!options.resume)
+				        Router.go('/') 
 
 
 				} else {
-					Session.set('test_username', null);
+					Session.delete('test_username');
 		            Session.set('welcome_error_message', response);
 				}
 			}

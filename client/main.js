@@ -15,9 +15,14 @@
 // });
 
 
+Session.set('test_username', localStorage.getItem("test_username"));
+Session.set('test_age', localStorage.getItem("test_age"));
+TestApp.login({resume:true});
+
+
 
 Template.registerHelper('session',function(input){
-    return Session.get(input);
+  return Session.get(input);
 });
 
 Template.registerHelper("log", function(something) {
@@ -53,18 +58,12 @@ UI.registerHelper('equals',  function(v1, v2) {
     return (v1 == v2);
 });
 
-
-
 Router.route('/',  {
   action: function () {
     if(!localStorage.getItem("test_username")){
       return Router.go('/welcome') 
     }
 
-    Session.set('test_username', localStorage.getItem("test_username"));
-    Session.set('test_age', localStorage.getItem("test_age"));
-
-    TestApp.login()
 
     this.render('TestTaker');
 

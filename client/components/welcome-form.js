@@ -22,7 +22,7 @@ Template.welcomeForm.events({
     //if everyrhing is filled
     if(Session.get('test_username') && Session.get('test_age')){
 
-        TestApp.login(true);
+        TestApp.login({new:true});
         // Router.go('/') 
     }
 
@@ -30,6 +30,11 @@ Template.welcomeForm.events({
   }
 
 });
+
+Template.welcomeForm.rendered = function(){
+    Session.delete('test_username');
+    Session.delete('test_age');
+};
 
   Template.welcomeForm.helpers({
     TestAge: function(){
