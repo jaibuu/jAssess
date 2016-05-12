@@ -1,10 +1,4 @@
 <head>
-  <title>jassess</title>
-
-
-
-
-
     <!-- Loading Bootstrap -->
     <link href="/flat-ui/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -99,12 +93,12 @@
           <h1>  {{ TestSession.current_question.label }} </h1>
 
           {{#if nextQuestion }}
-                  <a href="#" class="next_question">Next Question: {{ nextQuestion.label }} </a>
+<div>                  <a href="#" class="next_question">Next Question: {{ nextQuestion.label }} </a></div>
           {{else}}
-                  <a href="#" class="finish_session">Finish Session</a>
+<div>                  <a href="#" class="finish_session">Finish Session</a></div>
           {{/if}}
           {{#if prevQuestion }}
-                  <a href="#" class="prev_question">Previous Question: {{ prevQuestion.label }} </a>
+<div>                  <a href="#" class="prev_question">Previous Question: {{ prevQuestion.label }} </a></div>
           {{/if}}
 
       </div>

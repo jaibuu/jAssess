@@ -27,6 +27,9 @@ Template.registerHelper("log", function(something) {
   console.log(something);
 });
 
+Template.registerHelper("myname", function() {
+  return Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name;
+});
 
 Template.registerHelper("hasAnswered", function(participantName) {
   return !!Answers.findOne({
