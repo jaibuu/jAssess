@@ -27,6 +27,20 @@ Template.registerHelper("log", function(something) {
   console.log(something);
 });
 
+
+Template.registerHelper("hasAnswered", function(participantName) {
+  return !!Answers.findOne({
+      // connection_id : Meteor.default_connection._lastSessionId,
+      name: participantName,
+      session_id: TestSessions.findOne({'active': true})._id,
+      test_id: TestSessions.findOne({'active': true}).test()._id,
+      question_idx: TestSessions.findOne({'active': true}).current_question_idx
+    });
+});
+
+
+
+
 // adds index to each item
 UI.registerHelper('indexedArray', function(context, options) {
   if (context) {
@@ -85,7 +99,7 @@ Router.route('/',  {
     //Are there any answers already for this test, this person, and this question number for this session?
 
     if(!Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} )){
-       TestApp.login({resume:true});
+      console.log('login, ', findLastAnswer); TestApp.login({resume:true});
     }
 
     return Answers.findOne({
@@ -251,6 +265,30 @@ Router.route('/session/:_id', {
     this.render('SessionDashboard');
   }
 });
+
+  Template.SessionDashboard.events({
+      'click button': function(event) {
+
+        // stop the form from submitting
+        event.preventDefault();
+
+
+        // this.name = event.target.closest('form').querySelector('input').value;
+        // this.save();
+
+        var result = Participants.update({_id: this._id}, { name:  event.target.form.name.value});
+
+           console.log(    result,  this._id  );
+
+
+        // console.log(event.target.form.name.value, event.target.closest('form').querySelector('input').value);
+
+
+
+      }
+  });
+
+
   Template.SessionDashboard.helpers({
     SessionParticipants : function(){
       return Participants.find({last_activity : {$gt: TestSessions.findOne({active:true}).created_at }})

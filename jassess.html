@@ -112,11 +112,24 @@
 
 
     <div class="row">
-      <div class="col-md-6 col-md-offset-3">
+      <div class="">
         <div class="sessions">
           <h4>  {{currentTime}} </h4>
             {{#each SessionParticipants}}
-                <p>{{{this.name}}} - Las Active: {{formatTime this.last_activity }}</p> 
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+              <div class="tile" data-answered="{{hasAnswered this.name }}">
+              <h2 class="tile-title">{{{this.name}}}</h2>
+                <p>Last Active: {{formatTime this.last_activity }}</p> 
+
+
+
+                <div class="input-group"><form action="">
+                  <input type="text"  value="{{this.name}}"  class="form-control" name="name">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Update Name</button>
+                  </span>
+                </form></div>
+
 
                 <ul> 
                 {{#each this.connection_id}}
@@ -125,9 +138,10 @@
                     </li>
                 {{/each}}
                 </ul>
-                                
-            {{/each}}
+              </div>      
+            </div>
 
+            {{/each}}
         </div>
       </div>
     </div>
@@ -194,7 +208,7 @@
 
               {{/if}}
 
-            <button type="submit" class="btn btn-lg btn-primary btn-block">Siguiente</button>
+            <button type="submit" class="btn btn-lg btn-primary btn-block hide">Siguiente</button>
 
           </form>
         {{/with}}

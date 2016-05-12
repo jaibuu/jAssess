@@ -24,3 +24,9 @@ form[data-type="radio"] .action-label,
 form[data-type="radio"] .action-input {
 	width: 5em;
 }
+
+
+
+.tile[data-answered="true"]{
+	background-color: #8BE8A8;
+}
