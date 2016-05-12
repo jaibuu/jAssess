@@ -28,7 +28,11 @@ form[data-type="radio"] .action-input {
 
 
 .tile[data-answered="true"]{
-	background-color: #8BE8A8;
+	background-color: #27AE60;
+}
+
+.tile[data-rejected="true"]{
+	background-color: #F39C12;
 }
 
 .corner {

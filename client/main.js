@@ -35,18 +35,28 @@ Template.registerHelper("Settings", function() {
   return Settings.findOne();
 });
 
-Template.registerHelper("hasAnswered", function(participantName) {
-  return !!Answers.findOne({
+getAnswer = function(participantName) {
+  return Answers.findOne({
       // connection_id : Meteor.default_connection._lastSessionId,
       // rejected: false,
       name: participantName,
       session_id: TestSessions.findOne({'active': true})._id,
       test_id: TestSessions.findOne({'active': true}).test()._id,
       question_idx: TestSessions.findOne({'active': true}).current_question_idx
-    });
-});
+    }, {"sort": {"created_at": -1}});
+};
+
+hasAnswered = function(participantName) {
+  return !!getAnswer(participantName);
+};
 
 
+hasRejected = function(participantName){
+  return getAnswer(participantName).rejected;
+};
+
+Template.registerHelper("hasAnswered", hasAnswered);
+Template.registerHelper("hasRejected", hasRejected);
 
 
 // adds index to each item
@@ -158,7 +168,6 @@ Router.route('/',  {
       //> Answers.findOne({}, {"sort": {"created_at": -1}})
       event.preventDefault();
 
-      console.log('REJECT IT');
       Answers.update(Template.TestTaker.findLastAnswer()._id, {$set : { 'rejected' : true }});
     }
 
@@ -263,12 +272,8 @@ Router.route('/tester', {
       event.preventDefault();
       Meteor.call('endAllSessions', function(err, data) {
         console.log('Sessions ended');
-
       })
-
     }
-
-
   });
 
 

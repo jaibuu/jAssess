@@ -111,7 +111,7 @@
           <h4>  {{currentTime}} </h4>
             {{#each SessionParticipants}}
             <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
-              <div class="tile" data-answered="{{hasAnswered this.name }}">
+              <div class="tile" data-answered="{{hasAnswered this.name }}" data-rejected="{{hasRejected this.name }}">
               <h2 class="tile-title">{{{this.name}}}</h2>
                 <p>Last Active: {{formatTime this.last_activity }}</p> 
 
@@ -209,7 +209,7 @@
               </form>
             {{/with}}
           {{/with}}
-        
+
           
         {{else}}
               {{#if Settings.allowChanges}}
