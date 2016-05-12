@@ -86,6 +86,11 @@ Meteor.startup(function() {
     },
 
 
+    endAllSessions: function() {
+            TestSessions.update({active: true}, {$set: {active: false}});
+    },
+
+
     beginSession: function(session_id) {
       TestSessions.update({ 'id' : {'$ne' : session_id} }, {$set: {active: false}}, {multi: true});
       TestSessions.update({'_id' : session_id}, {$set: {active: true}});

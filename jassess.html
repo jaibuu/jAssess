@@ -39,6 +39,16 @@
     <div class="container">
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
+
+            <h2>Ongoing Sessions</h2>
+            <ul> 
+            {{#each OngoingSessions}}
+                <li>
+                    <p><a href="/session/{{ this._id }}" class="">Join Session {{{this._id}}}</a> </p> 
+                </li>
+            {{/each}}
+            </ul>
+
             <h2>Available Tests</h2>
             <ul> 
             {{#each Tests}}
@@ -57,6 +67,9 @@
                 </li>
             {{/each}}
             </ul>
+
+
+            <h2><a href="#" class="end-all-sessions" > End All Sessions </a></h2>
 
           </div>
         </div>
@@ -79,31 +92,10 @@
 
 <template name="SessionDashboard">
   <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-          <div class="sessions">
-              <h4>  {{currentTime}} </h4>
-              {{#each Participants}}
-                  <p>{{{this.name}}} - Las Active: {{formatTime this.last_activity }}</p> 
-
-                  <ul> 
-                  {{#each this.connection_id}}
-                      <li>
-                          <p>{{{this}}}</p> 
-                      </li>
-                  {{/each}}
-                  </ul>
-                                  
-              {{/each}}
-
-          </div>
-
-      </div>
-    </div>
-
 
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
+      <a href="/tester">Return</a>
           <h1>  {{ TestSession.current_question.label }} </h1>
 
           {{#if nextQuestion }}
@@ -111,13 +103,34 @@
           {{else}}
                   <a href="#" class="finish_session">Finish Session</a>
           {{/if}}
-
+          {{#if prevQuestion }}
+                  <a href="#" class="prev_question">Previous Question: {{ prevQuestion.label }} </a>
+          {{/if}}
 
       </div>
     </div>
 
 
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="sessions">
+          <h4>  {{currentTime}} </h4>
+            {{#each Participants}}
+                <p>{{{this.name}}} - Las Active: {{formatTime this.last_activity }}</p> 
 
+                <ul> 
+                {{#each this.connection_id}}
+                    <li>
+                        <p>{{{this}}}</p> 
+                    </li>
+                {{/each}}
+                </ul>
+                                
+            {{/each}}
+
+        </div>
+      </div>
+    </div>
 
   </div>  
 </template>

@@ -19,8 +19,6 @@ Session.set('test_username', localStorage.getItem("test_username"));
 Session.set('test_age', localStorage.getItem("test_age"));
 TestApp.login({resume:true});
 
-
-
 Template.registerHelper('session',function(input){
   return Session.get(input);
 });
@@ -63,7 +61,7 @@ Router.route('/',  {
     if(!localStorage.getItem("test_username")){
       return Router.go('/welcome') 
     }
-
+    TestApp.login({resume:true});
 
     this.render('TestTaker');
 
@@ -86,7 +84,7 @@ Router.route('/',  {
 
     //Are there any answers already for this test, this person, and this question number for this session?
 
-    if(Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name == null){
+    if(!Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} )){
       alert('Error: Nombre nulo');
     }
 
@@ -146,7 +144,7 @@ Router.route('/',  {
 
       console.log('processed', form.elements.selection.value, form.dataset.type);
 
-    if(Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name == null){
+    if(!Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} )){
       alert('Error: Nombre nulo');
     }
 
@@ -195,8 +193,11 @@ Router.route('/tester', {
   }
 });
   Template.TesterDashboard.helpers({
+    OngoingSessions : function(){
+      return TestSessions.find( {active : true} )
+    },
     AvailableParticipants : function(){
-      return Participants.find({'connection_id': {$not: {$size: 0}}  } ).fetch()
+      return Participants.find({'connection_id': {$not: {$size: 0}}  } )
     },
     Participants : function(){
       return Participants.find()
@@ -227,7 +228,18 @@ Router.route('/tester', {
 
       })
 
+    },
+
+    'click .end-all-sessions' : function(event){
+      event.preventDefault();
+      Meteor.call('endAllSessions', function(err, data) {
+        console.log('Sessions ended');
+
+      })
+
     }
+
+
   });
 
 
