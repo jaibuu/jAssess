@@ -324,14 +324,13 @@ Router.route('/session/:_id', {
 
            console.log( result,  this._id  );
 
-
-
       }
   });
 
 
   Template.SessionDashboard.helpers({
     SessionParticipants : function(){
+      if(TestSessions.findOne({active:true}))
       return Participants.find({last_activity : {$gt: TestSessions.findOne({active:true}).created_at }}, {"sort": {"created_at": -1}})
     },
     Participants : function(){

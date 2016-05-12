@@ -40,3 +40,7 @@ form[data-type="radio"] .action-input {
 	font-size: 0.8em;
 	color: gray;
 }
+
+.container.tester h1{ 
+	height: 2em;
+}
