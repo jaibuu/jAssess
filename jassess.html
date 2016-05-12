@@ -6,10 +6,10 @@
 
 
     <!-- Loading Bootstrap -->
-    <link href="flat-ui/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/flat-ui/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Loading Flat UI -->
-    <link href="flat-ui/css/flat-ui.min.css" rel="stylesheet">
+    <link href="/flat-ui/css/flat-ui.min.css" rel="stylesheet">
 
     <link rel="shortcut icon" href="img/favicon.ico">
 
@@ -115,7 +115,7 @@
       <div class="col-md-6 col-md-offset-3">
         <div class="sessions">
           <h4>  {{currentTime}} </h4>
-            {{#each Participants}}
+            {{#each SessionParticipants}}
                 <p>{{{this.name}}} - Las Active: {{formatTime this.last_activity }}</p> 
 
                 <ul> 

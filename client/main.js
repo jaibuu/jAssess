@@ -252,6 +252,9 @@ Router.route('/session/:_id', {
   }
 });
   Template.SessionDashboard.helpers({
+    SessionParticipants : function(){
+      return Participants.find({last_activity : {$gt: TestSessions.findOne({active:true}).created_at }})
+    },
     Participants : function(){
       return Participants.find()
     },

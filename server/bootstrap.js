@@ -87,7 +87,7 @@ Meteor.startup(function() {
 
 
     endAllSessions: function() {
-            TestSessions.update({active: true}, {$set: {active: false}});
+      TestSessions.update({active: true}, {$set: {active: false}});
     },
 
 
