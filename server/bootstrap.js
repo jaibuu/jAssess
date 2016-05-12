@@ -1,5 +1,11 @@
 // run this when the meteor app is started
+var em;
+
 Meteor.startup(function() {
+
+
+   em = new EventDDP('twoway');
+
 
 
   //load test
@@ -88,6 +94,10 @@ Meteor.startup(function() {
 
     endAllSessions: function() {
       TestSessions.update({active: true}, {$set: {active: false}});
+    },
+
+    forceNameChange: function(payload) {
+      em.emit('forceNameChange', payload);
     },
 
 

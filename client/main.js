@@ -15,6 +15,19 @@
 // });
 
 
+Meteor.startup(function() {
+
+var em = window.em = new EventDDP('twoway', Meteor.connection);
+
+//Set Listeners
+
+  em.addListener('forceNameChange', function() {
+    console.log('Server says forceNameChange', _.toArray(arguments));
+  }); 
+
+
+
+//Set Session
 Session.set('test_username', localStorage.getItem("test_username"));
 Session.set('test_age', localStorage.getItem("test_age"));
 TestApp.login({resume:true});
@@ -273,6 +286,13 @@ Router.route('/tester', {
       Meteor.call('endAllSessions', function(err, data) {
         console.log('Sessions ended');
       })
+    },
+
+    'click .force-name-change' : function(event){
+      event.preventDefault();
+      Meteor.call('forceNameChange', 'argu', function(err, data) {
+        console.log('force-name-change Called');
+      })
     }
   });
 
@@ -406,4 +426,4 @@ Router.route('/viewer', {
 
 
  
-
+})

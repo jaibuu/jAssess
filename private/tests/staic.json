@@ -31,27 +31,27 @@
 		{"type" : "scale_3", "label" : "Me siento angustiado"},
 		{"type" : "scale_3", "label" : "Me encuentro alegre"},
 		{"type" : "scale_3", "label" : "Me encuentro contrariado"},
-		{"type" : "scale_3", "label" : "Me siento triste"}
+		{"type" : "scale_3", "label" : "Me siento triste"},
 
-		{"type" : "scale_3", "label" : "Me preocupa cometer errores"}
-		{"type" : "scale_3", "label" : "Siento ganas de llorar"}
-		{"type" : "scale_3", "label" : "Me siento desgraciado"}
-		{"type" : "scale_3", "label" : "Me cuesta tomar una decisión"}
-		{"type" : "scale_3", "label" : "Me cuesta enfrentarme a mis problemas"}
-		{"type" : "scale_3", "label" : "Me preocupo demasiado"}
-		{"type" : "scale_3", "label" : "Me encuentro molesto"}
-		{"type" : "scale_3", "label" : "Pensamientos sin importancia me vienen a la cabeza y me molestan"}
-		{"type" : "scale_3", "label" : "Me preocupan las cosas del colegio"}
-		{"type" : "scale_3", "label" : "Me cuesta decidirme en lo que tengo que hacer"}
-		{"type" : "scale_3", "label" : "Noto que mi corazón late más rápido"}
-		{"type" : "scale_3", "label" : "Aunque no lo digo, tengo miedo"}
-		{"type" : "scale_3", "label" : "Me preocupo por cosas que puedan ocurrir"}
-		{"type" : "scale_3", "label" : "Me cuesta quedarme dormido por las noches"}
-		{"type" : "scale_3", "label" : "Tengo sensaciones extrañas en el estómago"}
-		{"type" : "scale_3", "label" : "Me preocupa lo que los otros piensen de mi"}
-		{"type" : "scale_3", "label" : "Me influyen tanto los problemas, que no puedo olvidarlos durante un tiempo"}
-		{"type" : "scale_3", "label" : "Tomo las cosas demasiado en serio"}
-		{"type" : "scale_3", "label" : "Encuentro muchas dificultades en mi vida"}
+		{"type" : "scale_3", "label" : "Me preocupa cometer errores"},
+		{"type" : "scale_3", "label" : "Siento ganas de llorar"},
+		{"type" : "scale_3", "label" : "Me siento desgraciado"},
+		{"type" : "scale_3", "label" : "Me cuesta tomar una decisión"},
+		{"type" : "scale_3", "label" : "Me cuesta enfrentarme a mis problemas"},
+		{"type" : "scale_3", "label" : "Me preocupo demasiado"},
+		{"type" : "scale_3", "label" : "Me encuentro molesto"},
+		{"type" : "scale_3", "label" : "Pensamientos sin importancia me vienen a la cabeza y me molestan"},
+		{"type" : "scale_3", "label" : "Me preocupan las cosas del colegio"},
+		{"type" : "scale_3", "label" : "Me cuesta decidirme en lo que tengo que hacer"},
+		{"type" : "scale_3", "label" : "Noto que mi corazón late más rápido"},
+		{"type" : "scale_3", "label" : "Aunque no lo digo, tengo miedo"},
+		{"type" : "scale_3", "label" : "Me preocupo por cosas que puedan ocurrir"},
+		{"type" : "scale_3", "label" : "Me cuesta quedarme dormido por las noches"},
+		{"type" : "scale_3", "label" : "Tengo sensaciones extrañas en el estómago"},
+		{"type" : "scale_3", "label" : "Me preocupa lo que los otros piensen de mi"},
+		{"type" : "scale_3", "label" : "Me influyen tanto los problemas, que no puedo olvidarlos durante un tiempo"},
+		{"type" : "scale_3", "label" : "Tomo las cosas demasiado en serio"},
+		{"type" : "scale_3", "label" : "Encuentro muchas dificultades en mi vida"},
 		{"type" : "scale_3", "label" : "Me siento menos feliz que los demás chicos"}
 
 	]

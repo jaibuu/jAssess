@@ -24,3 +24,4 @@ standard-minifier-js
 momentjs:moment
 http
 dburles:collection-helpers
+raix:eventddp
