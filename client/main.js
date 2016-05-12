@@ -86,9 +86,13 @@ Router.route('/',  {
 
     //Are there any answers already for this test, this person, and this question number for this session?
 
+    if(Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name == null){
+      alert('Error: Nombre nulo');
+    }
+
     return Answers.findOne({
       // connection_id : Meteor.default_connection._lastSessionId,
-      name: localStorage.getItem("test_username"),
+      name: Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name,
       session_id: TestSessions.findOne({'active': true})._id,
       test_id: TestSessions.findOne({'active': true}).test()._id,
       question_idx: TestSessions.findOne({'active': true}).current_question_idx
@@ -142,10 +146,16 @@ Router.route('/',  {
 
       console.log('processed', form.elements.selection.value, form.dataset.type);
 
+    if(Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name == null){
+      alert('Error: Nombre nulo');
+    }
+
+
       Template.TestTaker.currentQuestionSubmission = {
         created_at: new Date(),   
         session_id: TestSessions.findOne({'active': true})._id,
-        name: localStorage.getItem("test_username"),
+        name: Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name ,
+        age: Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).age ,
         connection_id : Meteor.default_connection._lastSessionId,
         test_id: TestSessions.findOne({'active': true}).test()._id,
         test_name: TestSessions.findOne({'active': true}).test().name,
