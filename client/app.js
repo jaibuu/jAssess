@@ -5,8 +5,6 @@ var App = function(){
 
 App.prototype.login = function(options = {new:false}){
 
-
-
     if(!!Session.get("test_username")){
 
         Meteor.call('join', {

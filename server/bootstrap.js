@@ -118,7 +118,10 @@ Meteor.startup(function() {
     Participants.find().fetch().forEach( function(Participant) {
 
       var old_ids = Participant.connection_id;
+      if(typeof old_ids == 'string') old_ids = [old_ids];
       var old_ids_snapshot = JSON.stringify(old_ids);
+
+      // if(!old_ids.length) return;
 
       var new_ids = old_ids.filter(function(n) {
         return Object.keys(Meteor.server.sessions).indexOf(n) != -1;
