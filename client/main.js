@@ -251,7 +251,7 @@ Router.route('/tester', {
       return Participants.find({'connection_id': {$not: {$size: 0}}  } )
     },
     PastSessions : function(){
-      return TestSessions.find()
+      return TestSessions.find({},  {"sort": {"created_at": -1}});
     },
     Participants : function(){
       return Participants.find()
@@ -315,8 +315,11 @@ Router.route('/results/:_id', {
   }
 });
 
-  Template.SessionDashboard.helpers({
-    test: function(){
+  Template.ResultsDashboard.helpers({
+    SessionAnswers: function(){
+
+      console.log('the session id', this._id);
+            return Answers.find({session_id: this._id});
 
     }
   });
