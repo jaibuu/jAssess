@@ -30,10 +30,6 @@ var em = window.em = new EventDDP('twoway', Meteor.connection);
 
 
 
-//Set Session
-Session.set('test_username', localStorage.getItem("test_username"));
-Session.set('test_age', localStorage.getItem("test_age"));
-TestApp.login({resume:true});
 
 Template.registerHelper('session',function(input){
   return Session.get(input);
@@ -453,6 +449,19 @@ Router.route('/viewer', {
 
 //current name:   Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name
 
+
+//Set Session
+Session.set('test_username', localStorage.getItem("test_username"));
+Session.set('test_age', localStorage.getItem("test_age"));
+
+
+
+setTimeout(function(){
+  if(Router.current().route.path() != '/tester'){
+    console.log('log call');
+    TestApp.login({resume:true});
+  }
+},1000);
 
  
 })
