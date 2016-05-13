@@ -300,6 +300,28 @@ Router.route('/tester', {
   });
 
 
+Router.route('/results/:_id', {
+  //waitOn: function () {
+  //  return IRLibLoader.load('//media.twiliocdn.com/sdk/rtc/js/ip-messaging/v0.8/twilio-ip-messaging.min.js');
+  //},
+
+  data: function(){
+      var currentSession = this.params._id;
+      return TestSessions.findOne({_id: currentSession});
+  },
+
+  action: function () {
+    this.render('ResultsDashboard');
+  }
+});
+
+  Template.SessionDashboard.helpers({
+    test: function(){
+
+    }
+  });
+
+
 Router.route('/session/:_id', {
   //waitOn: function () {
   //  return IRLibLoader.load('//media.twiliocdn.com/sdk/rtc/js/ip-messaging/v0.8/twilio-ip-messaging.min.js');
