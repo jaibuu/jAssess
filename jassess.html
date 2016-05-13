@@ -62,6 +62,14 @@
             {{/each}}
             </ul>
 
+
+            <h2>Past Sessions</h2>
+            <ul> 
+            {{#each PastSessions}}
+                    <p> <a href="/results/{{ this._id }}"> {{this._id}} </a> </p> 
+            {{/each}}
+            </ul>
+
             <button type="button" class="btn btn-danger end-all-sessions"> End All Sessions </button>
             
             <hr>

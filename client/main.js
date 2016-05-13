@@ -250,6 +250,9 @@ Router.route('/tester', {
     AvailableParticipants : function(){
       return Participants.find({'connection_id': {$not: {$size: 0}}  } )
     },
+    PastSessions : function(){
+      return TestSessions.find()
+    },
     Participants : function(){
       return Participants.find()
     },
