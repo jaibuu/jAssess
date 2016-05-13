@@ -227,7 +227,9 @@
           
         {{else}}
               {{#if Settings.allowChanges}}
-                <a class="btn btn-lg btn-warning btn-block reject">Cambiar Respuesta - {{ TestSession.current_question.label }}: {{ lastAnswer.option_label }}</a>
+
+
+                <a class="btn btn-lg btn-warning btn-block reject" alt=" {{ TestSession.current_question.label }}: {{ lastAnswer.option_label }}">Cambiar Respuesta</a>
               {{/if}}
         {{/if}}
 
