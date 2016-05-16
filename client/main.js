@@ -40,6 +40,14 @@ Template.registerHelper("log", function(something) {
 });
 
 Template.registerHelper("myName", function() {
+
+  console.log('MY NAME');
+
+  if(!Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ))
+    return false;
+
+  console.log(Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ));
+
   return Participants.findOne( {connection_id : Meteor.default_connection._lastSessionId} ).name;
 });
 
@@ -407,39 +415,49 @@ Router.route('/session/:_id', {
   
   Template.SessionDashboard.events({
 
-    // 'click .form-control .btn-default': function(event) {
+    'click .change-name': function(event) {
 
-    //   // stop the form from submitting
-    //   event.preventDefault();
+      event.preventDefault();
 
+      var result = Participants.update( this._id, { $set : {  name:  event.target.form.name.value}});
 
-    //   // this.name = event.target.closest('form').querySelector('input').value;
-    //   // this.save();
+      console.log( result,  this._id  );
 
-    //   var result = Participants.update({_id: this._id}, { name:  event.target.form.name.value});
+    },
 
-    //      console.log( result,  this._id  );
+    'click .remove-participant': function(event) {
 
-    // },
+      event.preventDefault();
+
+      // var result = Participants.update( this._id, { $set : {  name:  event.target.form.name.value}});
+      // 
+
+      console.log('dell');
+
+      if(confirm('Delete '+ this.name + '?')){
+        Participants.remove( this._id);
+      }
+
+    },
 
 
     'click .allow-answers' : function(event){
       event.preventDefault();
 
-      TestSessions.update( {'_id': TestSessions.findOne({'active': true})._id }, { $set : { 'answers_allowed' : true }});
+      TestSessions.update( TestSessions.findOne({'active': true})._id , { $set : { 'answers_allowed' : true }});
     },
 
     'click .disallow-answers' : function(event){
       event.preventDefault();
 
-      TestSessions.update( {'_id': TestSessions.findOne({'active': true})._id }, { $set : { 'answers_allowed' : false }});
+      TestSessions.update( TestSessions.findOne({'active': true})._id , { $set : { 'answers_allowed' : false }});
     },
 
     'click .finish_session' : function(event){
       event.preventDefault();
 
       //setting sessions to inactive
-      TestSessions.update( {'_id': TestSessions.findOne({'active': true})._id}, {$set : {   'active' : 'false' }});
+      TestSessions.update( TestSessions.findOne({'active': true})._id, {$set : {   'active' : 'false' }});
 
       Router.go('/tester');
     },
