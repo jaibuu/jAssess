@@ -56,6 +56,7 @@ Template.registerHelper("Settings", function() {
 });
 
 getAnswer = function(participantName) {
+  if(!!TestSessions.findOne({'active': true}))
   return Answers.findOne({
       // connection_id : Meteor.default_connection._lastSessionId,
       // rejected: false,
@@ -399,6 +400,7 @@ Router.route('/session/:_id', {
     },
 
     Enabled: function() {
+      if(TestSessions.findOne({'active': true}))
       return TestSessions.findOne({'active': true}).answers_allowed;
     },
 

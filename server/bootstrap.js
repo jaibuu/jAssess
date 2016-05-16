@@ -140,13 +140,13 @@ Meteor.startup(function() {
 
     IncreaseCurrentTestQuestionIndex: function(){
       console.log('INCREASING ac');
-      TestSessions.update( {'active': true}, { $inc : { "current_question_idx" : 1 }, 'answers_allowed' : false });
+      TestSessions.update( {'active': true}, { $inc : { "current_question_idx" : 1 }, $set: {'answers_allowed' : false} });
     },
 
 
     DecreaseCurrentTestQuestionIndex: function(){
       console.log('DECREASING ac');
-      TestSessions.update( {'active': true}, { $inc : { "current_question_idx" : -1 }, 'answers_allowed' : false  });
+      TestSessions.update( {'active': true}, { $inc : { "current_question_idx" : -1 }, $set: {'answers_allowed' : false} });
     }
 
   });
