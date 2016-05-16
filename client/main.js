@@ -102,6 +102,11 @@ UI.registerHelper('equals',  function(v1, v2) {
 });
 
 Router.route('/',  {
+
+  waitOn: function () {
+  //   return IRLibLoader.load('/flat-ui/js/flat-ui.min.js');
+  },
+
   action: function () {
     if(!localStorage.getItem("test_username")){
       return Router.go('/welcome') 
@@ -161,6 +166,9 @@ Router.route('/',  {
       } else {
         return false;
       }
+    },
+    Enabled: function() {
+      return TestSessions.findOne({'active': true}).answers_allowed;
     }
     
   });
@@ -235,9 +243,6 @@ Router.route('/welcome',  {
 });
 
 Router.route('/tester', {
-  //waitOn: function () {
-  //  return IRLibLoader.load('//media.twiliocdn.com/sdk/rtc/js/ip-messaging/v0.8/twilio-ip-messaging.min.js');
-  //},
 
   action: function () {
     this.render('TesterDashboard');
@@ -270,7 +275,8 @@ Router.route('/tester', {
       // get the data we need from the form
       var session_data = {
         'created_at' : new Date(),
-        'test_id' : this._id
+        'test_id' : this._id,
+        'answers_allowed' : false
       };
       var session = TestSessions.insert(session_data);
       console.log('Created session for ', this.name);
@@ -336,30 +342,12 @@ Router.route('/session/:_id', {
     this.render('SessionDashboard');
   }
 });
-
-  Template.SessionDashboard.events({
-      'click button': function(event) {
-
-        // stop the form from submitting
-        event.preventDefault();
-
-
-        // this.name = event.target.closest('form').querySelector('input').value;
-        // this.save();
-
-        var result = Participants.update({_id: this._id}, { name:  event.target.form.name.value});
-
-           console.log( result,  this._id  );
-
-      }
-  });
-
-
   Template.SessionDashboard.helpers({
     SessionParticipants : function(){
       if(TestSessions.findOne({active:true}))
       return Participants.find({last_activity : {$gt: TestSessions.findOne({active:true}).created_at }}, {"sort": {"created_at": -1}})
     },
+
     // SessionAnswers: function(){
 
     //   // //Incomplete, it should show only one per person
@@ -383,12 +371,15 @@ Router.route('/session/:_id', {
 
 
     // },
+
     Participants : function(){
       return Participants.find()
     },
+
     TestSession: function() {
       return TestSessions.findOne({'active': true});
     },
+
     nextQuestion : function (){
       if(TestSessions.findOne({'active': true})) {
         if(TestSessions.findOne({'active': true}).current_question_idx < TestSessions.findOne({'active': true}).test().questions.length-1){
@@ -398,6 +389,11 @@ Router.route('/session/:_id', {
         }
       }
     },
+
+    Enabled: function() {
+      return TestSessions.findOne({'active': true}).answers_allowed;
+    },
+
     prevQuestion : function (){
       if(TestSessions.findOne({'active': true})) {
         if(TestSessions.findOne({'active': true}).current_question_idx > 0){
@@ -410,11 +406,40 @@ Router.route('/session/:_id', {
   });
   
   Template.SessionDashboard.events({
+
+    // 'click .form-control .btn-default': function(event) {
+
+    //   // stop the form from submitting
+    //   event.preventDefault();
+
+
+    //   // this.name = event.target.closest('form').querySelector('input').value;
+    //   // this.save();
+
+    //   var result = Participants.update({_id: this._id}, { name:  event.target.form.name.value});
+
+    //      console.log( result,  this._id  );
+
+    // },
+
+
+    'click .allow-answers' : function(event){
+      event.preventDefault();
+
+      TestSessions.update( {'_id': TestSessions.findOne({'active': true})._id }, { $set : { 'answers_allowed' : true }});
+    },
+
+    'click .disallow-answers' : function(event){
+      event.preventDefault();
+
+      TestSessions.update( {'_id': TestSessions.findOne({'active': true})._id }, { $set : { 'answers_allowed' : false }});
+    },
+
     'click .finish_session' : function(event){
       event.preventDefault();
 
       //setting sessions to inactive
-      TestSessions.update( {'_id': TestSessions.findOne({'active': true})._id}, { 'active' : 'false' });
+      TestSessions.update( {'_id': TestSessions.findOne({'active': true})._id}, {$set : {   'active' : 'false' }});
 
       Router.go('/tester');
     },
