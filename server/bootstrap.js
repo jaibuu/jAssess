@@ -203,7 +203,7 @@ Meteor.startup(function() {
   });
 
 
-  Meteor.publish("SessionAnswers", function () {
+  Meteor.publish("SessionAnswers2", function () {
     ReactiveAggregate(this, Answers, [{
       $group: {
         _id: "$name",
@@ -211,6 +211,73 @@ Meteor.startup(function() {
       }
     }], { clientCollection: "SessionAnswersLive" });
   });
+
+
+  Meteor.publish("Results", function(options) {
+    // This does this: Run aggregation of the fields below on the Answers
+    // Collection...
+
+    console.log('SESSION_ID', options, options.session_id);
+
+
+    ReactiveAggregate(this, Answers, 
+
+      //PIPELINE
+
+      [{ $match : {session_id: 'MHR9Yvx63chJjFpnk'} }, {
+        $group: {
+            _id: "$name",            
+            // _id: { 
+
+            //   "session_id": "$session_id",
+            //   "name": "$name"
+
+            // },
+            // session_id: { $addToSet: "$session_id" },
+            // answers: { $push: "$$ROOT" },
+            answers: { $push: "$$ROOT" },
+
+            // sessions: '$session_id',
+            // name: '$name',
+            // hallo: 'bla'
+            // 'count': {
+            //     $sum: '$question_idx'
+            // },
+
+            // 'magazines': {
+            //     $sum: '$magazines'
+            // },
+            // 'brochures': {
+            //     $sum: '$brochures'
+            // },
+            // 'books': {
+            //     $sum: 'books'
+            // }
+        }
+    },
+
+    
+
+
+    // ,{ 
+    //     // ... and return them in an iterable form as this:
+    //     $project: {
+    //       // answers: {
+    //         _id: 0,
+    //         name: 1
+    //       // }
+    //     }
+    // }
+
+    ], { 
+
+      //OPTIONS
+
+      // and send the results to another collection called below
+      clientCollection: "SessionAnswersLive" 
+    });
+});
+
 
 
 });

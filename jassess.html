@@ -113,11 +113,29 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
 
+      <table>
+          
+
+
                 {{#each SessionAnswers}}
-                    <p>
-                        {{{this.question_label}}}
-                    </p>
+                  <tr>
+
+
+                    <td> {{{this._id}}} </td>
+
+
+                  </tr>
+
+
+
+
+
                 {{/each}}
+
+
+      </table>
+
+
 
       </div>
     </div>

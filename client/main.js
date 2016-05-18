@@ -21,12 +21,14 @@ var em = window.em = new EventDDP('twoway', Meteor.connection);
 
 //Set Listeners
   
-  em.addListener('forceNameChange', function() {
-    console.log('Server says forceNameChange', _.toArray(arguments));
+em.addListener('forceNameChange', function() {
+  console.log('Server says forceNameChange', _.toArray(arguments));
 
-    if(Router.current().route.path() == '/' || Router.current().route.path() == '/welcome')
-      TestApp.logout();
-  }); 
+  if(Router.current().route.path() == '/' || Router.current().route.path() == '/welcome')
+    TestApp.logout();
+}); 
+
+
 
 
 
@@ -315,6 +317,8 @@ Router.route('/tester', {
   });
 
 
+var resultsSubscription;
+
 Router.route('/results/:_id', {
   //waitOn: function () {
   //  return IRLibLoader.load('//media.twiliocdn.com/sdk/rtc/js/ip-messaging/v0.8/twilio-ip-messaging.min.js');
@@ -327,14 +331,22 @@ Router.route('/results/:_id', {
 
   action: function () {
     this.render('ResultsDashboard');
+
+    if(resultsSubscription){
+      resultsSubscription.stop();
+      console.log('Stopped Old Subscription');
+     }
+
+    resultsSubscription = Meteor.subscribe("Results", {'session_id' : this.params._id});
+
+
   }
 });
 
   Template.ResultsDashboard.helpers({
     SessionAnswers: function(){
-
-      console.log('the session id', this._id);
-            return Answers.find({session_id: this._id});
+      return SessionAnswersLive.find();
+      // return Answers.find({session_id: this._id}, {"sort": {"name": -1}});
 
     }
   });
@@ -345,8 +357,8 @@ Router.route('/session/:_id', {
   //  return IRLibLoader.load('//media.twiliocdn.com/sdk/rtc/js/ip-messaging/v0.8/twilio-ip-messaging.min.js');
   //},
   action: function () {
-    console.log('subs');
-    SessionAnswers = Meteor.subscribe("SessionAnswers");
+    // console.log('subs');
+    // SessionAnswers = Meteor.subscribe("SessionAnswers");
 
     this.render('SessionDashboard');
   }

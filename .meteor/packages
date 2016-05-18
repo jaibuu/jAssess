@@ -26,3 +26,4 @@ http
 dburles:collection-helpers
 raix:eventddp
 jcbernack:reactive-aggregate
+meteorhacks:aggregate
