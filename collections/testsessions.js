@@ -2,6 +2,12 @@ TestSessions = new Mongo.Collection('TestSessions');
 
 TestSessions.helpers({
   test() {
+
+    if(!this.test_id && Answers.findOne({"session_id": this._id  })){
+      this.test_id = Answers.findOne({"session_id": this._id  }).test_id;
+    }
+
+
     return Tests.findOne(this.test_id);
   },
 
