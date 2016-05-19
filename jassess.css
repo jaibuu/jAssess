@@ -89,3 +89,7 @@ td.answer[data-option-idx="2"] {
 td.answer[data-option-idx="3"] {
 	background-color: #ff9f9f;
 }
+
+[data-option-rejected="true"] {
+	color: red;
+}

@@ -364,13 +364,10 @@ Router.route('/results/:_id', {
 
   Template.ResultsDashboard.helpers({
     SessionAnswers: function(){
-      return SessionAnswersLive.find();
+      return SessionAnswersLive.find({}, {"sort": {insensitive_name: 1}});
       // return Answers.find({session_id: this._id}, {"sort": {"name": -1}});
     },
 
-    // testQuestions: function(){
-    //   return this.data;
-    // }
   });
 
 

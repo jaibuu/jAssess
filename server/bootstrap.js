@@ -203,7 +203,7 @@ Meteor.startup(function() {
   });
 
 
-  Meteor.publish("SessionAnswers2", function () {
+  Meteor.publish("SessionAnswersRaw", function () {
     ReactiveAggregate(this, Answers, [{
       $group: {
         _id: "$name",
@@ -219,55 +219,24 @@ Meteor.startup(function() {
 
     console.log('SESSION_ID', options, options.session_id);
 
-
     ReactiveAggregate(this, Answers, 
 
       //PIPELINE
 
-      [{ $match : {session_id: options.session_id} }, {
-        $group: {
-            _id: "$name",            
-            // _id: { 
-
-            //   "session_id": "$session_id",
-            //   "name": "$name"
-
-            // },
-            // session_id: { $addToSet: "$session_id" },
-            // answers: { $push: "$$ROOT" },
-            answers: { $push: "$$ROOT" },
-
-            // sessions: '$session_id',
-            // name: '$name',
-            // hallo: 'bla'
-            // 'count': {
-            //     $sum: '$question_idx'
-            // },
-
-            // 'magazines': {
-            //     $sum: '$magazines'
-            // },
-            // 'brochures': {
-            //     $sum: '$brochures'
-            // },
-            // 'books': {
-            //     $sum: 'books'
-            // }
+    [
+      { $match : {session_id: options.session_id} }, 
+      { $sort : {created_at: -1 } },
+      { $group: {
+          _id: "$name",
+          answers: { $push: "$$ROOT" },
         }
-    },
+      },
+      { $project: {
+       "insensitive_name": { "$toLower": "$_id" },
+       "answers": "$answers"
 
-    
-
-
-    // ,{ 
-    //     // ... and return them in an iterable form as this:
-    //     $project: {
-    //       // answers: {
-    //         _id: 0,
-    //         name: 1
-    //       // }
-    //     }
-    // }
+      }}
+      // { $sort : {_id: 1 } },
 
     ], { 
 

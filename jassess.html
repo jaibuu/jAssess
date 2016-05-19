@@ -142,7 +142,7 @@
 
                 {{#each ../test.questions}}
 
-                  <td class="answer" data-option-idx="{{ answerForQuestionIdx @index ../answers 'option' }}"  > {{ answerForQuestionIdx @index ../answers 'option_label' }}  </td>
+                  <td class="answer" data-option-rejected="{{ answerForQuestionIdx @index ../answers 'rejected' }}" data-option-idx="{{ answerForQuestionIdx @index ../answers 'option' }}"  > {{ answerForQuestionIdx @index ../answers 'option_label' }}  </td>
                 {{/each}}
   
 
