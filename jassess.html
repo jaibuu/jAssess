@@ -111,26 +111,61 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-12">
 
-      <table>
+      <table class="answers">
           
 
 
+
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+
+                {{#each test.questions}}
+
+                  <th> {{ this.label }} </th>
+                {{/each}}
+
+
+                  </tr>
+                </thead>
+
+                <tbody>
                 {{#each SessionAnswers}}
+
+
                   <tr>
 
 
                     <td> {{{this._id}}} </td>
 
+                {{#each ../test.questions}}
+
+                  <td class="answer" data-option-idx="{{ answerForQuestionIdx @index ../answers 'option' }}"  > {{ answerForQuestionIdx @index ../answers 'option_label' }}  </td>
+                {{/each}}
+  
+
+<!--                       {{#each this.answers}}
+
+                        {{#unless this.rejected}}
+
+                          <td data-option="{{this.option}}"  >
+                            {{this.option_label}}                        
+                          </td>
+
+                        {{/unless }}
+
+
+                      {{/each}} -->
 
                   </tr>
-
-
-
-
-
                 {{/each}}
+
+</tbody>
+
+
+
 
 
       </table>

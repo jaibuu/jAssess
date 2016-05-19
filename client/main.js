@@ -41,6 +41,22 @@ Template.registerHelper("log", function(something) {
   console.log(something);
 });
 
+
+Template.registerHelper("answerForQuestionIdx", function(idx, answers, property) {
+
+  var list = answers;
+  for (var key in list) {
+    if (list.hasOwnProperty(key)) {
+      if( list[key].question_idx == idx ) {
+        return list[key][property];
+      }
+    }
+  }
+
+  return false;
+
+});
+
 Template.registerHelper("myName", function() {
 
   console.log('MY NAME');
@@ -325,21 +341,24 @@ Router.route('/results/:_id', {
   //},
 
   data: function(){
-      var currentSession = this.params._id;
-      return TestSessions.findOne({_id: currentSession});
+      return TestSessions.findOne({_id: this.params._id});
   },
 
   action: function () {
-    this.render('ResultsDashboard');
+
+
+
 
     if(resultsSubscription){
       resultsSubscription.stop();
       console.log('Stopped Old Subscription');
      }
 
+     console.log('subscribing for', this.params._id);
+
     resultsSubscription = Meteor.subscribe("Results", {'session_id' : this.params._id});
 
-
+    this.render('ResultsDashboard');
   }
 });
 
@@ -347,8 +366,11 @@ Router.route('/results/:_id', {
     SessionAnswers: function(){
       return SessionAnswersLive.find();
       // return Answers.find({session_id: this._id}, {"sort": {"name": -1}});
+    },
 
-    }
+    // testQuestions: function(){
+    //   return this.data;
+    // }
   });
 
 

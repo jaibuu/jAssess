@@ -224,7 +224,7 @@ Meteor.startup(function() {
 
       //PIPELINE
 
-      [{ $match : {session_id: 'MHR9Yvx63chJjFpnk'} }, {
+      [{ $match : {session_id: options.session_id} }, {
         $group: {
             _id: "$name",            
             // _id: { 
