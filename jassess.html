@@ -66,7 +66,7 @@
             <h2>Past Sessions</h2>
             <ul> 
             {{#each PastSessions}}
-                    <p> <a href="/results/{{ this._id }}">  {{this.test.name }} -  {{this.created_at}} -  {{this._id}} </a> </p> 
+                    <p> <a href="/results/{{ this._id }}">  {{this.test.name }} -  {{this.start_date}} -  {{this._id}} </a> </p> 
             {{/each}}
             </ul>
 
@@ -105,7 +105,7 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
        <p> {{ test.name }} </p>
-       <p> {{ created_at }} </p>
+       <p> {{ start_date }} </p>
 
       </div>
     </div>

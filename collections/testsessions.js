@@ -6,10 +6,21 @@ TestSessions.helpers({
     if(!this.test_id && Answers.findOne({"session_id": this._id  })){
       this.test_id = Answers.findOne({"session_id": this._id  }).test_id;
     }
-
-
     return Tests.findOne(this.test_id);
   },
+
+
+  start_date() {
+
+    if(!this.created_at && Answers.findOne({"session_id": this._id  })){
+      this.created_at = Answers.findOne({"session_id": this._id  }).created_at;
+    }
+
+    return this.created_at
+  },
+
+
+
 
   current_question(){
   	var current_question = Tests.findOne(this.test_id).questions[ this.current_question_idx ];
