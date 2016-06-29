@@ -142,8 +142,17 @@
 
                 {{#each ../test.questions}}
 
-                  <td class="answer" data-option-rejected="{{ answerForQuestionIdx @index ../answers 'rejected' }}" data-option-idx="{{ answerForQuestionIdx @index ../answers 'option' }}"  > {{ answerForQuestionIdx @index ../answers 'option_label' }}  </td>
+                  <td class="answer" data-option-rejected="{{ answerForQuestionIdx @index ../answers 'rejected' }}" data-option-idx="{{ answerForQuestionIdx @index ../answers 'option' }}"> {{ answerForQuestionIdx @index ../answers 'option_label' }}  </td>
                 {{/each}}
+
+                {{#if equals ../test.name 'STAIC' }}
+                  
+                  <td> {{ traitForAnswers answers }} </td>
+                  <td> {{ State1ForAnswers answers }} </td>
+                  <td> {{ State2ForAnswers answers }} </td>
+                  <td> {{ StateForAnswers answers }} </td>                  
+
+                {{/if}}
   
 
 <!--                       {{#each this.answers}}

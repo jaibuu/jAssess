@@ -57,6 +57,41 @@ Template.registerHelper("answerForQuestionIdx", function(idx, answers, property)
 
 });
 
+Template.registerHelper("traitForAnswers", function(answers) {
+
+  //21-40
+  //question_idx
+
+  var list = answers;
+  for (var key in list) {
+    if (list.hasOwnProperty(key)) {
+      if( list[key].question_idx == 38 ) {
+        return list[key]['option']+1;
+      }
+    }
+  }
+
+  return 'traitForAnswers';
+});
+
+Template.registerHelper("State1ForAnswers", function(answers) {
+  return 'State1ForAnswers';
+});
+
+Template.registerHelper("State2ForAnswers", function(answers) {
+  return 'State2ForAnswers';
+});
+
+Template.registerHelper("StateForAnswers", function(answers) {
+  return 'StateForAnswers';
+});
+
+
+
+
+
+
+
 Template.registerHelper("myName", function() {
 
   console.log('MY NAME');
@@ -561,7 +596,7 @@ Session.set('test_age', localStorage.getItem("test_age"));
 
 
 setTimeout(function(){
-  if(Router.current().route.path() != '/tester'){
+  if(Router.current().route && Router.current().route.path() != '/tester'){
     console.log('log call');
     TestApp.login({resume:true});
   }
