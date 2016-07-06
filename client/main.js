@@ -62,16 +62,20 @@ Template.registerHelper("traitForAnswers", function(answers) {
   //21-40
   //question_idx
 
+  var traitDP = 0;
+
   var list = answers;
   for (var key in list) {
     if (list.hasOwnProperty(key)) {
-      if( list[key].question_idx == 38 ) {
-        return list[key]['option']+1;
+      if( list[key].question_idx >= 20 ) {
+
+        console.log('counting', list[key]);
+        traitDP += parseInt(list[key]['option'], 10)+1;
       }
     }
   }
 
-  return 'traitForAnswers';
+  return traitDP;
 });
 
 Template.registerHelper("State1ForAnswers", function(answers) {
