@@ -229,11 +229,13 @@ Meteor.startup(function() {
       { $group: {
           _id: "$name",
           answers: { $push: "$$ROOT" },
+          age: { $first: "$age" },
         }
       },
       { $project: {
        "insensitive_name": { "$toLower": "$_id" },
-       "answers": "$answers"
+       "answers": "$answers",
+       "age": "$age"
 
       }}
       // { $sort : {_id: 1 } },

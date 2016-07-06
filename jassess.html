@@ -121,11 +121,22 @@
                 <thead>
                   <tr>
                     <th>Nombre</th>
+                    <th>Edad</th>
 
-                {{#each test.questions}}
+                    {{#each test.questions}}
 
-                  <th> {{ this.label }} </th>
-                {{/each}}
+                      <th> {{ this.label }} </th>
+                    {{/each}}
+
+                    {{#if equals ../test.name 'STAIC' }}
+
+                      <th> Trait </th>
+                      <th> A </th>
+                      <th> B </th>
+                      <th> A-B+40 </th>
+
+
+                    {{/if}}
 
 
                   </tr>
@@ -139,6 +150,7 @@
 
 
                     <td> {{{this._id}}} </td>
+                    <td> {{{this.age}}} </td>
 
                 {{#each ../test.questions}}
 
@@ -147,10 +159,10 @@
 
                 {{#if equals ../test.name 'STAIC' }}
                   
-                  <td> {{ traitForAnswers answers }} </td>
+                  <td> <strong> {{ traitForAnswers answers }} </strong> </td>
                   <td> {{ State1ForAnswers answers }} </td>
                   <td> {{ State2ForAnswers answers }} </td>
-                  <td> {{ StateForAnswers answers }} </td>                  
+                  <td><strong>   {{ StateForAnswers answers }}  </strong> </td>                  
 
                 {{/if}}
   

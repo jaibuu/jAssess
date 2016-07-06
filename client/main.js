@@ -57,37 +57,72 @@ Template.registerHelper("answerForQuestionIdx", function(idx, answers, property)
 
 });
 
-Template.registerHelper("traitForAnswers", function(answers) {
+var traitForAnswers = function(answers) {
 
   //21-40
   //question_idx
 
-  var traitDP = 0;
+  var output = 0;
+  var passedValues = [];
 
   var list = answers;
   for (var key in list) {
-    if (list.hasOwnProperty(key)) {
-      if( list[key].question_idx >= 20 ) {
-
-        console.log('counting', list[key]);
-        traitDP += parseInt(list[key]['option'], 10)+1;
-      }
+    if (list.hasOwnProperty(key) && list[key].question_idx >= 20 && passedValues.indexOf( list[key].question_idx) == -1 ){
+      passedValues.push(list[key].question_idx);
+      output += parseInt(list[key]['option'], 10)+1;
     }
   }
 
-  return traitDP;
-});
+  return output;
+};
 
-Template.registerHelper("State1ForAnswers", function(answers) {
-  return 'State1ForAnswers';
-});
+Template.registerHelper("traitForAnswers", traitForAnswers);
 
-Template.registerHelper("State2ForAnswers", function(answers) {
-  return 'State2ForAnswers';
-});
+
+
+var State1ForAnswers = function(answers) {
+
+  var acceptedVals = [2, 3, 5, 7, 12, 14, 15, 17, 19, 20];
+  var output = 0;
+  var passedValues = [];
+
+  var list = answers;
+  for (var key in list) {
+    if (list.hasOwnProperty(key) && acceptedVals.indexOf(list[key].question_idx) > -1 && passedValues.indexOf( list[key].question_idx) == -1 ){
+      passedValues.push(list[key].question_idx);
+      output += parseInt(list[key]['option'], 10)+1;
+    }
+  }
+
+  return output;
+
+};
+
+Template.registerHelper("State1ForAnswers", State1ForAnswers);
+
+var State2ForAnswers = function(answers) {
+
+  var acceptedVals = [1, 4, 6, 8, 9, 10, 11, 13, 16, 18];
+  var output = 0;
+  var passedValues = [];
+
+  var list = answers;
+  for (var key in list) {
+    if (list.hasOwnProperty(key) && acceptedVals.indexOf(list[key].question_idx) > -1 && passedValues.indexOf( list[key].question_idx) == -1 ){
+      passedValues.push(list[key].question_idx);
+      output += parseInt(list[key]['option'], 10)+1;
+    }
+  }
+
+  return output;
+
+};
+
+Template.registerHelper("State2ForAnswers", State2ForAnswers);
 
 Template.registerHelper("StateForAnswers", function(answers) {
-  return 'StateForAnswers';
+
+  return State1ForAnswers(answers) - State2ForAnswers(answers) + 40;
 });
 
 
